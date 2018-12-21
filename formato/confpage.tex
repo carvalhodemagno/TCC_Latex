@@ -1,0 +1,78 @@
+\setlrmarginsandblock{3cm}{2cm}{*}
+\setulmarginsandblock{3cm}{3cm}{*}
+\setheaderspaces{2cm}{*}{*}
+
+\checkandfixthelayout
+
+\makeheadrule{myheadings}{\textwidth}{\normalrulethickness}
+\makeoddhead{myheadings}{\textsc{\leftmark}}{}{\thepage}
+
+\copypagestyle{contents}{myheadings}
+\makeoddhead{contents}{\textsc{\contentsname}}{}{\thepage}
+
+\copypagestyle{bibliography}{myheadings}
+\makeoddhead{bibliography}{\textsc{\bibname}}{}{\thepage}
+
+\makeatletter
+
+\def\mychaptermark#1{%
+	\markboth{%
+	\ifnum \c@secnumdepth >\m@ne
+		\if@mainmatter
+			\thechapter. \ %
+		\fi
+	\fi
+	#1}{}}%
+
+\def\mysectionmark#1{%
+\markright{%
+	\ifnum \c@secnumdepth > \z@
+		\thesection. \ %
+	\fi
+	#1}}%
+
+\makeatother
+
+\maxsecnumdepth{subsubsection}
+
+\newcommand{\tableformat}{\small\centering}
+\newcommand{\figureformat}{\centering}
+
+\renewcommand{\labelenumi}{\alph{enumi})}
+\renewcommand{\labelenumii}{\arabic{enumii}.}
+
+\setcounter{tocdepth}{2} %-- ajusta produndidade do indice
+
+\let\Chapter\chapter
+\def\chapter{\addtocontents{lol}{\protect\addvspace{10pt}}\Chapter}
+
+\renewcommand{\lstlistingname}{Algoritmo}
+\renewcommand{\lstlistlistingname}{Lista de Algoritmos}
+
+\lstset{
+  numbers=left,
+  stepnumber=1,
+  firstnumber=1,
+  numberstyle=\tiny,
+  extendedchars=true,
+  breaklines=true,
+  frame=tb,
+  basicstyle=\footnotesize,
+  stringstyle=\ttfamily,
+  showstringspaces=false,
+  captionpos=b,
+  breakautoindent=truem
+  language=C,
+  numbersep=5pt,
+  tabsize=2,
+  morekeywords={assert,enquanto,se,fim,entao,senao,retorne,faca,assume,Passo,for,int,long, unsigned,while}
+}
+
+\makeatletter
+\renewcommand\l@lstlisting[2]{\@dottedtocline{1}{0cm}{0.95cm}{#1}{#2}}
+\makeatother
+
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+\usepackage{parskip}
+\setlength{\parindent}{35pt}

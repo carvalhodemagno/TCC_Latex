@@ -1,0 +1,139 @@
+% +------- CÓDIGO FONTE APOSTILA MATLAB -------+
+% 	Autor: Alexandre de Assis Ribeiro, 2018/2.
+% 	E-mail: alexandredearibeiro@gmail.com
+% +--------------------------------+
+\documentclass[a4paper,12pt,oneside,openright,final]{memoir}
+
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage[portuguese,ruled,vlined]{algorithm2e}
+\SetKwFor{Para}{para}{fa�a}{fim para}
+\SetKwRepeat{Do}{do}{while}
+\usepackage{algorithmic}
+\usepackage{adjustbox}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{mathptmx}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{verbatim}
+\usepackage{calc}
+\usepackage{multirow}
+\usepackage{pagina}
+\usepackage{nomes}
+\usepackage{pbox}
+\usepackage{subcaption}
+\usepackage{epstopdf}
+\usepackage{cite}
+\usepackage[brazil]{babel}
+\usepackage[utf8,latin1]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+%\usepackage{abntex2cite}
+%\usepackage{abntex2abrev}
+%\usepackage{hyperref}
+\usepackage{enumerate}
+%\usepackage[brazilian]{babel}
+\usepackage[T1,T2A]{fontenc}
+\usepackage{amssymb}
+%\usepackage[portuguese]{babel}
+\usepackage[
+    a4paper,
+    portuguese,
+    bookmarks=true,
+    bookmarksnumbered=true,
+    linktocpage,
+    ]{hyperref}
+\usepackage{memhfixc}
+\usepackage{listings}
+\usepackage{marvosym}
+\usepackage{pgf}
+\usepackage{float}
+\usepackage{indentfirst}
+\usepackage{verbatim}
+%\usepackage{tikz}
+%\usetikzlibrary{arrows,automata,positioning,trees,shapes}
+\usepackage{mdframed}
+\usepackage[T1]{fontenc}
+\usepackage{tabularx}
+\linespread{1.5}
+
+\usepackage{pdfpages}
+
+\input{formato/confpage.tex}
+
+\begin{document}
+
+\newcommand{\limit}[3] {\ensuremath{\lim_{#1 \rightarrow #2} #3}}
+\newtheorem{definition}{Defini��o}[chapter]
+\newtheorem{lemma}{Lema}[chapter]
+\newtheorem{theorem}{Teorema}[chapter]
+
+\newtheorem{fact}{Fact}[chapter]
+\newtheorem{example}{Exemple}[chapter]
+
+\input{0_Capa/capa}
+%\includepdf[pages=1]{0_capa/ficha_catalografica.pdf}
+%\includepdf[pages=1]{0_capa/banca.pdf}
+%\input{0_capa/agradecimentos}
+\input{0_Capa/resumo}
+\input{0_Capa/abstract}
+
+%------------------------------------------------------------------
+% �ndices
+%------------------------------------------------------------------
+
+\pagestyle{contents}
+\pagenumbering{roman}
+
+\tableofcontents*  % gera o �ndice (sum�rio)
+\cleardoublepage
+
+%\phantomsection
+%\addcontentsline{toc}{chapter}{\listfigurename}
+%\listoffigures*    % gera a lista de figuras
+%\cleardoublepage
+
+%\phantomsection
+%\addcontentsline{toc}{chapter}{\listtablename}
+%\listoftables*     % gera a lista de tabelas
+%\cleardoublepage
+
+\newcommand{\algorithmname}{Algoritmo}
+\newcommand{\listalgorithmname}{Lista de Algoritmos} \newlistof{listofalgorithms}{loa}{\listalgorithmname}
+
+\phantomsection
+\addcontentsline{toc}{chapter}{\listalgorithmname}
+\listofalgorithms*
+\cleardoublepage
+
+\input{0_Capa/abreviacoes}
+
+\mainmatter
+\pagestyle{myheadings}
+
+\let\chaptermark=\mychaptermark
+\let\sectionmark=\mysectionmark
+
+\setcounter{secnumdepth}{3}	% ajusta profundidade da contagem de s�ries
+
+\input{1_Introducao/introducao}
+\input{2_Fundamentacao_Teorica/Fundamentacao_Teorica}
+\input{3_Arquitetura/Arquitetura}
+\input{4_Implementacao/Implementacao}
+\input{5_Resultados/Resultados}
+\input{6_Conclusao/Conclusao}
+
+\appendix
+%\input{apendice/publicacoes}
+
+\cleardoublepage
+\pagestyle{bibliography}
+\bibliographystyle{abntex2-num}
+%\bibliographystyle{IEEEtran}
+\bibliography{bibliografia/refs}
+
+\end{document}
