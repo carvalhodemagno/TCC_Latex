@@ -1,35 +1,48 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Implementação}
-\label{chapter:implementacao}
+\chapter{Desenvolvimento}
+\label{chapter:desenvolvimento}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Este capítulo apresenta detalhadamente o que foi feito para desenvolver e implementar o sistema de gerenciamento e controle de um condicionador de ar, levando em conta 3 pilares principais: \textit{Hardware}, \textit{Firmware} e \textit{Software}.
 
 \section{\textit{Hardware}}
 \label{section_hardware}
+O desenvolvimento do \textit{hardware} iniciou-se com o levantamento dos circuitos elétricos necessários para cumprir as funções requeridas conforme a concepção do projeto, sendo eles: Circuito de Conexão com \textit{Wi-Fi}, Circuito de Ativação do Condicionador de Ar e Circuito de Medição da Qualidade e Consumo da Energia Elétrica. O Circuito de Conexão com \textit{Wi-Fi} é  responsável por trocar informações com o aplicativo mobile, utilizando o protocolo MQTT. O Circuito de Ativação do Condicionador de Ar é responsável  por permitir ou não a alimentação elétrica desse dispositivo. E o Circuito de Medição da Qualidade e Consumo da Energia Elétrica é responsável por realizar as medições provenientes da rede elétrica como tensão, corrente, fator de potência e frequência.
 
-\subsection{Componentes} 
+A elaboração da PCB contendo os circuitos foi dividida em 4 partes principais: a escolha dos componentes a serem usados em cada circuito, o desenvolvimento dos esquemáticos elétricos, o desenvolvimento do \textit{layout} da placa de circuito impresso (PCB) e a prototipagem da PCB.
 
-\subsection{Esquemáticos Elétricos}
+\subsection{Componentes utilizados} 
+Para realizar a escolha dos componentes foi levado em conta principalmente o custo, visando tornar o produto atrativo ao usuário final, ou seja, o consumidor.
+
+Para suprir as funcionalidades do Circuito de Conexão com \textit{Wi-Fi}, foi escolhido o módulo ESP12-F, representado na figura \ref{fig:ESP12-F}, que contém um microcontrolador juntamente com o circuito de radio-frequência (RF) para o \textit{Wi-Fi} e um LED indicativo. O microcontrolador contido no módulo é o ESP8266EX, representado na figura \ref{fig:ESP8266EX},e suas principais características são\cite{ESP8266EX_DATASHEET}:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\columnwidth]{figuras/Schematic_Power_Supply}
-	\caption{Esquemático elétrico da alimentação do circuito.}
-	\label{fig:Schematic_Power_Supply}
+	\includegraphics[width=0.4\columnwidth]{figuras/ESP12-F}
+	\caption{Módulo ESP12-F\cite{AiThinker}.}
+	\label{fig:ESP12-F}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\columnwidth]{figuras/Schematic_Meter}
-	\caption{Esquemático elétrico do sistema de medição da energia elétrica.}
-	\label{fig:Schematic_Meter}
+	\includegraphics[width=0.4\columnwidth]{figuras/ESP8266EX}
+	\caption{Microcontrolador ESP8266EX \cite{ESP8266_MICRO}.}
+	\label{fig:ESP8266EX}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1\columnwidth]{figuras/Schematic_Core_Processor}
-	\caption{Esquemático elétrico referente ao microcontrolador.}
-	\label{fig:Schematic_Core_Processor}
-\end{figure}
+\begin{itemize}
+	\item Microprocessador de 32 bits;
+	\item \textit{Wi-Fi} integrado sob o protocolo 802.11 b/g/n, na frequência de 2.4GHz;
+	\item Interface periféricas: UART, SDIO, SPI, I2C, I2S, GPIO, ADC e PWM;
+	\item Tensão de operação: 2,5V a 3,6V;
+	\item Corrente de operação: em média 80mA;
+	\item Tamanho: 5 mm x 5 mm;
+	\item 32 pinos;
+	\item Interface de gravação tanto por UART, quanto por \textit{over-the-air} (OTA).
+	\item Até 4 perfis de baixo consumo de energia.
+\end{itemize}
+
+
+\subsection{Esquemáticos elétricos}
 
 \subsection{\textit{Layout} da PCB}
 Para realizar o \textit{layout} da PCB, foi necessário levar em conta os pontos críticos do circuito, que foram:
@@ -41,7 +54,8 @@ Para realizar o \textit{layout} da PCB, foi necessário levar em conta os pontos 
 
 \subsection{Fabricação}
 
-\subsection{Módulo Placa de Automação de Refrigeração Residencial}
+
+\subsection{Módulo placa de automação de refrigeração residencial}
 
 \section{\textit{Firmware}}
 \label{section_firmware}
