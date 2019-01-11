@@ -6,14 +6,14 @@ Este capítulo apresenta detalhadamente o que foi feito para desenvolver e implem
 
 \section{\textit{Hardware}}
 \label{section_hardware}
-O desenvolvimento do \textit{hardware} iniciou-se com o levantamento dos circuitos elétricos necessários para cumprir as funções requeridas conforme a concepção do projeto, sendo eles: Circuito de Conexão com \textit{Wi-Fi}, Circuito de Ativação do Condicionador de Ar e Circuito de Medição da Qualidade e Consumo da Energia Elétrica. O Circuito de Conexão com \textit{Wi-Fi} é  responsável por trocar informações com o aplicativo mobile, utilizando o protocolo MQTT. O Circuito de Ativação do Condicionador de Ar é responsável  por permitir ou não a alimentação elétrica desse dispositivo. E o Circuito de Medição da Qualidade e Consumo da Energia Elétrica é responsável por realizar as medições provenientes da rede elétrica como tensão, corrente, fator de potência e frequência.
+O desenvolvimento do \textit{hardware} iniciou-se com o levantamento dos circuitos elétricos necessários para cumprir as funções requeridas conforme a concepção do projeto, sendo eles: \textbf{Circuito de Conexão com \textit{Wi-Fi}}, \textbf{Circuito de Ativação do Condicionador de Ar} e \textbf{Circuito de Medição da Qualidade e Consumo da Energia Elétrica}. O Circuito de Conexão com \textit{Wi-Fi} é  responsável por trocar informações com o aplicativo mobile, utilizando o protocolo MQTT. O Circuito de Ativação do Condicionador de Ar é responsável  por permitir ou não a alimentação elétrica desse dispositivo. E o Circuito de Medição da Qualidade e Consumo da Energia Elétrica é responsável por realizar as medições provenientes da rede elétrica como tensão, corrente, fator de potência e frequência.
 
 A elaboração da PCB contendo os circuitos foi dividida em 4 partes principais: a escolha dos componentes a serem usados em cada circuito, o desenvolvimento dos esquemáticos elétricos, o desenvolvimento do \textit{layout} da placa de circuito impresso (PCB) e a prototipagem da PCB.
 
 \subsection{Componentes utilizados} 
 Para realizar a escolha dos componentes foi levado em conta principalmente o custo, visando tornar o produto atrativo ao usuário final, ou seja, o consumidor.
 
-Para suprir as funcionalidades do Circuito de Conexão com \textit{Wi-Fi}, foi escolhido o módulo ESP12-F, representado na figura \ref{fig:ESP12-F}, que contém um microcontrolador juntamente com o circuito de radio-frequência (RF) para o \textit{Wi-Fi} e um LED indicativo. O microcontrolador contido no módulo é o ESP8266EX, representado na figura \ref{fig:ESP8266EX},e suas principais características são\cite{ESP8266EX_DATASHEET}:
+Para suprir as funcionalidades do \textbf{Circuito de Conexão com \textit{Wi-Fi}}, o componente principal escolhido foi o módulo ESP12-F, representado na figura \ref{fig:ESP12-F}, que contém um microcontrolador juntamente com o circuito de radio-frequência (RF) para o \textit{Wi-Fi} e um LED indicativo. O microcontrolador contido no módulo é o ESP8266EX, representado na figura \ref{fig:ESP8266EX}, e suas principais características são\cite{ESP8266EX_DATASHEET}:
 
 \begin{figure}[H]
 	\centering
@@ -37,10 +37,54 @@ Para suprir as funcionalidades do Circuito de Conexão com \textit{Wi-Fi}, foi es
 	\item Corrente de operação: em média 80mA;
 	\item Tamanho: 5 mm x 5 mm;
 	\item 32 pinos;
-	\item Interface de gravação tanto por UART, quanto por \textit{over-the-air} (OTA).
+	\item Interface de gravação tanto por UART, quanto por \textit{over-the-air} (OTA);
 	\item Até 4 perfis de baixo consumo de energia.
 \end{itemize}
 
+Foram adicionados 2 (dois) \textit{light-emitting diodes} (LEDs) do tipo \textit{suface mounting device} (SMD), representado na figura \ref{fig:LED_SMD}, a este circuito também, um para indicar comunicação com o celular pelo protocolo MQTT e um para indicar se a alimentação elétrica da PCB está nos níveis corretos, assim como 2 (dois) botões do tipo \textit{push-buttom}, representado na figura \ref{fig:Push_Button}, para realizar a gravação do \textit{firmware} no microcontrolador.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\columnwidth]{figuras/LED_SMD}
+	\caption{Microcontrolador ESP8266EX \cite{LED_SMD}.}
+	\label{fig:LED_SMD}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\columnwidth]{figuras/Push_Button}
+	\caption{Microcontrolador ESP8266EX \cite{Push_Button}.}
+	\label{fig:Push_Button}
+\end{figure}
+
+Para o \textbf{Circuito de Ativação do Condicionador de Ar}, o principal componente escolhido foi o relé SRD-05VDC-SL-C, representado na figura \ref{fig:srd-05vdc-sl-c}, quais características principais são:
+
+\begin{itemize}
+	\item Tensão de ativação do enrolamento: 5 V;
+	\item Corrente nominal do enrolamento: 89,3 mA;
+	\item Resistência do enrolamento: 55 $ \Omega $;
+	\item Consumo de potência do enrolamento: 0.36 W;
+	\item Máxima tensão admissível no chave: 110 VDC ou 225 VAC;
+	\item Capacidade de corrente da chave para carga do tipo resistiva: 10 A para 125 VAC e 7 A para 240 VAC.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\columnwidth]{figuras/srd-05vdc-sl-c}
+	\caption{Relé SRD-05VDC-SL-C \cite{SRD-05VDC-SL-C_imagem}.}
+	\label{fig:srd-05vdc-sl-c}
+\end{figure}
+
+O relé SRD-05VDC-SL-C é utilizado para ativar uma contatora que, por sua vez, alimenta o condicionador de ar. A contatora utilizada é a ??????????????
+
+Para o \textbf{Circuito de Medição da Qualidade e Consumo da Energia Elétrica}, o principal componente escolhido foi MCP39F521, representado na figura \ref{fig:MCP39F521}, que é responsável por fazer as medições da tensão, corrente, fator de potência e frequência da rede de energia elétrica, informações essas suficientes para definir se ela está adequada para alimentar o condicionador de ar. O MCP39F521 é um dispositivo de monitoramento de energia monofásico completo e altamente integrado, projetado para medição em tempo real de energia de entrada para fontes de alimentação CA / CC, unidades de distribuição de energia, consumidor e aplicações industriais. Inclui ADCs delta-sigma de canal duplo, um mecanismo de cálculo de 16 bits, EEPROM e uma interface I2C de dois fios flexível. Uma referência integrada de voltagem de baixa derivação com 10 ppm / ° C além de 94,5 dB de desempenho de sinal-ruído e taxa de distorção (SINAD) em cada canal de medição permite melhor que 0,1 $ \% $ de projetos precisos em uma faixa dinâmica de 4000:1.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\columnwidth]{figuras/MCP39F521}
+	\caption{Circuito Integrado MCP39F521 \cite{MCP39F521}.}
+	\label{fig:MCP39F521}
+\end{figure}
 
 \subsection{Esquemáticos elétricos}
 
@@ -56,6 +100,7 @@ Para realizar o \textit{layout} da PCB, foi necessário levar em conta os pontos 
 
 
 \subsection{Módulo placa de automação de refrigeração residencial}
+
 
 \section{\textit{Firmware}}
 \label{section_firmware}
