@@ -6,7 +6,7 @@ Este capítulo apresenta detalhadamente o que foi feito para desenvolver e implem
 
 \section{\textit{Hardware}}
 \label{section_hardware}
-O desenvolvimento do \textit{hardware} iniciou-se com o levantamento dos circuitos elétricos necessários para cumprir as funções requeridas conforme a concepção do projeto, sendo eles: \textbf{Circuito de Conexão com \textit{Wi-Fi}}, \textbf{Circuito de Ativação do Condicionador de Ar} e \textbf{Circuito de Medição da Qualidade e Consumo da Energia Elétrica}. O Circuito de Conexão com \textit{Wi-Fi} é  responsável por trocar informações com o aplicativo mobile, utilizando o protocolo MQTT. O Circuito de Ativação do Condicionador de Ar é responsável  por permitir ou não a alimentação elétrica desse dispositivo. E o Circuito de Medição da Qualidade e Consumo da Energia Elétrica é responsável por realizar as medições provenientes da rede elétrica como tensão, corrente, fator de potência e frequência.
+O desenvolvimento do \textit{hardware} iniciou-se com o levantamento dos circuitos elétricos necessários para cumprir as funções requeridas conforme a concepção do projeto, sendo eles: \textbf{Circuito de Conexão com \textit{Wi-Fi}}, \textbf{Circuito de Ativação do Condicionador de Ar} e \textbf{Circuito de Monitoramento}. O Circuito de Conexão com \textit{Wi-Fi} é  responsável por trocar informações com o aplicativo mobile, utilizando o protocolo MQTT. O Circuito de Ativação do Condicionador de Ar é responsável  por permitir ou não a alimentação elétrica desse dispositivo. E o Circuito de Monitoramento é responsável por realizar as medições provenientes da rede elétrica como tensão, corrente, fator de potência e frequência com intuito de definir se os níveis estão adequados ao condicionador de ar e verificar a presença ou ausência humana onde o equipamento está instalado.
 
 A elaboração da PCB contendo os circuitos foi dividida em 4 partes principais: a escolha dos componentes a serem usados em cada circuito, o desenvolvimento dos esquemáticos elétricos, o desenvolvimento do \textit{layout} da placa de circuito impresso (PCB) e a prototipagem da PCB.
 
@@ -46,14 +46,14 @@ Foram adicionados 2 (dois) \textit{light-emitting diodes} (LEDs) do tipo \textit
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\columnwidth]{figuras/LED_SMD}
-	\caption{Microcontrolador ESP8266EX \cite{LED_SMD}.}
+	\caption{LED SMD \cite{LED_SMD}.}
 	\label{fig:LED_SMD}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\columnwidth]{figuras/Push_Button}
-	\caption{Microcontrolador ESP8266EX \cite{Push_Button}.}
+	\caption{Botão do tipo \textit{push} \cite{Push_Button}.}
 	\label{fig:Push_Button}
 \end{figure}
 
@@ -75,9 +75,9 @@ Para o \textbf{Circuito de Ativação do Condicionador de Ar}, o principal compone
 	\label{fig:srd-05vdc-sl-c}
 \end{figure}
 
-O relé SRD-05VDC-SL-C é utilizado para ativar uma contatora que, por sua vez, alimenta o condicionador de ar. A contatora utilizada é a ??????????????
+O relé SRD-05VDC-SL-C foi utilizado para ativar uma contatora que, por sua vez, alimenta o condicionador de ar. A contatora utilizada foi a ??????????????
 
-Para o \textbf{Circuito de Medição da Qualidade e Consumo da Energia Elétrica}, o principal componente escolhido foi MCP39F521, representado na figura \ref{fig:MCP39F521}, que é responsável por fazer as medições da tensão, corrente, fator de potência e frequência da rede de energia elétrica, informações essas suficientes para definir se ela está adequada para alimentar o condicionador de ar. O MCP39F521 é um dispositivo de monitoramento de energia monofásico completo e altamente integrado, projetado para medição em tempo real de energia de entrada para fontes de alimentação CA / CC, unidades de distribuição de energia, consumidor e aplicações industriais. Inclui ADCs delta-sigma de canal duplo, um mecanismo de cálculo de 16 bits, EEPROM e uma interface I2C de dois fios flexível. Uma referência integrada de voltagem de baixa derivação com 10 ppm / ° C além de 94,5 dB de desempenho de sinal-ruído e taxa de distorção (SINAD) em cada canal de medição permite melhor que 0,1 $ \% $ de projetos precisos em uma faixa dinâmica de 4000:1.
+Para o \textbf{Circuito de Monitoramento}, o componente escolhido para fazer as medições de tensão, corrente, fator de potência e frequência da rede de energia elétrica, informações essas suficientes para definir se ela está adequada para alimentar o condicionador de ar, foi MCP39F521, representado na figura \ref{fig:MCP39F521}. O MCP39F521 é um dispositivo de monitoramento de energia monofásico completo e altamente integrado, projetado para medição em tempo real de energia de entrada para fontes de alimentação de corrente alternada e de corrente contínua, unidades de distribuição de energia, consumidor e aplicações industriais. Inclui ADCs delta-sigma de canal duplo, um mecanismo de cálculo de 16 bits, EEPROM e uma interface I2C de dois fios flexível. Uma referência integrada de tensão de baixa derivação com 10 ppm/°C além de 94,5 dB de desempenho de sinal-ruído e taxa de distorção (SINAD) em cada canal de medição permite melhor que 0,1 $ \% $ de projetos precisos em uma faixa dinâmica de 4000:1\cite{MCP39F521_Datasheet}. Foi adicionado também um sensor de temperatura analógico, por questões de segurança (superaquecimento), para monitorar a temperatura da PCB, MCP9700 que é representado pela figura \ref{fig:MCP9700}.
 
 \begin{figure}[H]
 	\centering
@@ -85,6 +85,14 @@ Para o \textbf{Circuito de Medição da Qualidade e Consumo da Energia Elétrica}, 
 	\caption{Circuito Integrado MCP39F521 \cite{MCP39F521}.}
 	\label{fig:MCP39F521}
 \end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\columnwidth]{figuras/MCP9700}
+	\caption{Circuito Integrado MCP9700 \cite{MCP9700}.}
+	\label{fig:MCP9700}
+\end{figure}
+
 
 \subsection{Esquemáticos elétricos}
 
@@ -104,7 +112,8 @@ Para realizar o \textit{layout} da PCB, foi necessário levar em conta os pontos 
 
 \section{\textit{Firmware}}
 \label{section_firmware}
-Para elaboração inicial do \textit{firmware}, foi utilizado o módulo NodeMCU Lol1n, mostrado na figura \ref{fig:nodemcu_lol1n}, que contém um módulo ESP-12E porém com os circuitos de alimentação e gravação por interface USB já embutidos nele. Esta metodologia de utilizar um módulo pronto foi utilizada com intuito de diminuir o tempo gasto com a elaboração de um circuito para gravação do microcontrolador e também para permitir o desenvolvimento do \textit{firmware} antes do término da fabricação, montagem dos componentes e testes elétricos da PCB.
+Para elaboração inicial do \textit{firmware}, foi utilizado o módulo NodeMCU Lol1n, mostrado na figura \ref{fig:nodemcu_lol1n}, que contém um módulo ESP-12E porém com os circuitos de alimentação e gravação por interface USB já embutidos nele. Esta metodologia de utilizar um módulo pronto
+foi utilizada com intuito de diminuir o tempo gasto com a elaboração de um circuito para gravação do microcontrolador e também para permitir o desenvolvimento do \textit{firmware} antes do término da fabricação, montagem dos componentes e testes elétricos da PCB.
 
 \begin{figure}[H]
 	\centering
