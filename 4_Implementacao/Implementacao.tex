@@ -63,7 +63,7 @@ Para o \textbf{Circuito de Ativação do Condicionador de Ar}, o principal compone
 	\item Tensão de ativação do enrolamento: 5 V;
 	\item Corrente nominal do enrolamento: 89,3 mA;
 	\item Resistência do enrolamento: 55 $ \Omega $;
-	\item Consumo de potência do enrolamento: 0.36 W;
+	\item Consumo de potência do enrolamento: 0,36 W;
 	\item Máxima tensão admissível no chave: 110 VDC ou 225 VAC;
 	\item Capacidade de corrente da chave para carga do tipo resistiva: 10 A para 125 VAC e 7 A para 240 VAC.
 \end{itemize}
@@ -75,7 +75,14 @@ Para o \textbf{Circuito de Ativação do Condicionador de Ar}, o principal compone
 	\label{fig:srd-05vdc-sl-c}
 \end{figure}
 
-O relé SRD-05VDC-SL-C foi utilizado para ativar uma contatora que, por sua vez, alimenta o condicionador de ar. A contatora utilizada foi a ??????????????
+O relé SRD-05VDC-SL-C foi utilizado para ativar uma contatora que, por sua vez, alimenta o condicionador de ar. Como o objetivo foi de ativar qualquer tipo de condicionador de ar, utilizou-se contatoras, representadas na imagem \ref{fig:contatora}, que aceitassem tanto 110 VAC quanto 220 VAC no enrolamento de alimentação.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\columnwidth]{figuras/contatora}
+	\caption{Contatora Telemecanique \cite{contatora_ref}.}
+	\label{fig:contatora}
+\end{figure}
 
 Para o \textbf{Circuito de Monitoramento}, o componente escolhido para fazer as medições de tensão, corrente, fator de potência e frequência da rede de energia elétrica, informações essas suficientes para definir se ela está adequada para alimentar o condicionador de ar, foi MCP39F521, representado na figura \ref{fig:MCP39F521}. O MCP39F521 é um dispositivo de monitoramento de energia monofásico completo e altamente integrado, projetado para medição em tempo real de energia de entrada para fontes de alimentação de corrente alternada e de corrente contínua, unidades de distribuição de energia, consumidor e aplicações industriais. Inclui ADCs delta-sigma de canal duplo, um mecanismo de cálculo de 16 bits, EEPROM e uma interface I2C de dois fios flexível. Uma referência integrada de tensão de baixa derivação com 10 ppm/°C além de 94,5 dB de desempenho de sinal-ruído e taxa de distorção (SINAD) em cada canal de medição permite melhor que 0,1 $ \% $ de projetos precisos em uma faixa dinâmica de 4000:1\cite{MCP39F521_Datasheet}. Foi adicionado também um sensor de temperatura analógico, por questões de segurança (superaquecimento), para monitorar a temperatura da PCB, MCP9700 que é representado pela figura \ref{fig:MCP9700}.
 
