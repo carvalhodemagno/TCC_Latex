@@ -105,29 +105,16 @@ Para o \textbf{Circuito de Sensoriamento}, o componente escolhido para fazer as 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Esquemáticos elétricos}
+\subsection{Esquemáticos elétricos e \textit{Layout} da PCB}
 A partir dos circuitos elétricos previamente citados, elaborou-se os esquemáticos elétricos baseando-se principalmente nos documentos de \textit{Reference Design} disponibilizados pelos fabricantes dos CI's utilizados. O documento principal utilizado foi o guia do usuário para o MCP39F521 \cite{MCP39f521_user_guide}, que auxiliou principalmente no \textbf{Circuito de Sensoriamento}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\textit{Layout} da PCB}
-Para realizar o \textit{layout} da PCB, foi necessário levar em conta os pontos críticos do circuito, que foram:
-
-\begin{enumerate}
-	\item[1.] Apresentar tensão alternada de 110 ou 220 volts nominal, para alimentação do circuito mostrado nas Imagens \ref{fig:Schematic_Power_Supply}, \ref{fig:Schematic_Meter} e \ref{fig:Schematic_Core_Processor}, e os terminais de controle da contatora.
-	\item[2.] Apresentar um LED 
-\end{enumerate}
-
-\subsection{Fabricação}
-
 
 \subsection{Módulo placa de automação de refrigeração residencial}
 
 
 \section{\textit{Firmware}}
 \label{section_firmware}
-Para elaboração inicial do \textit{firmware}, foi utilizado o módulo NodeMCU Lol1n, mostrado na figura \ref{fig:nodemcu_lol1n}, que contém um módulo ESP-12E porém com os circuitos de alimentação e gravação por interface USB já embutidos nele. Esta metodologia de utilizar um módulo pronto
-foi utilizada com intuito de diminuir o tempo gasto com a elaboração de um circuito para gravação do microcontrolador e também para permitir o desenvolvimento do \textit{firmware} antes do término da fabricação, montagem dos componentes e testes elétricos da PCB.
+Para elaboração inicial do \textit{firmware}, foi utilizado o módulo NodeMCU Lol1n, mostrado na figura \ref{fig:nodemcu_lol1n}, que contém um módulo ESP-12E e os circuitos de alimentação e gravação por interface USB já embutidos nele. Adotou-se esta metodologia, de utilizar um módulo com os circuitos prontos para uso, com intuito de diminuir o tempo de desenvolvimento e também para permitir a elaboração do \textit{firmware} antes da conclusão do desenvolvimento do \textit{hardware}, citado na seção \ref{section_hardware}.
 
 \begin{figure}[H]
 	\centering
@@ -136,11 +123,23 @@ foi utilizada com intuito de diminuir o tempo gasto com a elaboração de um circu
 	\label{fig:nodemcu_lol1n}
 \end{figure}
 
-\subsection{Comunicação no protocolo MQTT}
+O desenvolvimento do \textit{firmware} foi dividido em três partes principais: Comunicação sob o protocolo MQTT por meio da interface Wi-Fi, \textit{Driver} de controle dos periféricos e Monitoramento dos sensores. 
 
-\subsection{Monitoramento de presença humana}
+\subsection{Comunicação sob o protocolo MQTT por meio da interface Wi-Fi}
+Conforme citado na seção \ref{section_hardware}, o ESP8266EX apresenta a interface Wi-Fi como uma funcionalidade integrada ao CI, característica que facilita o desenvolvimento do \textit{firmware} para as funcionalidades básicas do Wi-Fi como: 
+\begin{itemize}
+	\item Conectar em uma rede Wi-Fi por meio do SSID e Senha;
+	\item Obtenção de IP nesta rede local;
+	\item Acesso à internet pela rede local;
+	\item Trocar mensagens por meio de um \textit{socket} na camada TCP;
+	
+\end{itemize}
 
-\subsection{Monitoramento da qualidade da energia elétrica}
+
+
+\subsection{\textit{Driver} de controle dos periféricos}
+
+\subsection{Monitoramento dos sensores}
 
 
 
