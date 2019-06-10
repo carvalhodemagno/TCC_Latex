@@ -119,23 +119,24 @@ Para elaboração inicial do \textit{firmware}, foi utilizado o módulo NodeMCU Lol
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\columnwidth]{figuras/nodemcu_lol1n}
-	\caption{Módulo NodeMCU Lol1n.}
+	\caption{Módulo NodeMCU Lol1n \cite{nodemcu_lolin}.}
 	\label{fig:nodemcu_lol1n}
 \end{figure}
 
 O desenvolvimento do \textit{firmware} foi dividido em três partes principais: Comunicação sob o protocolo MQTT por meio da interface Wi-Fi, \textit{Driver} de controle dos periféricos e Monitoramento dos sensores. 
 
 \subsection{Comunicação sob o protocolo MQTT por meio da interface Wi-Fi}
-Conforme citado na seção \ref{section_hardware}, o ESP8266EX apresenta a interface Wi-Fi como uma funcionalidade integrada ao CI, característica que facilita o desenvolvimento do \textit{firmware} para as funcionalidades básicas do Wi-Fi como: 
+Conforme citado na seção \ref{section_hardware}, o ESP8266EX apresenta a interface Wi-Fi integrada ao CI, característica que facilita o desenvolvimento do \textit{firmware} para as funcionalidades básicas do Wi-Fi como: 
 \begin{itemize}
 	\item Conectar em uma rede Wi-Fi por meio do SSID e Senha;
 	\item Obtenção de IP nesta rede local;
 	\item Acesso à internet pela rede local;
 	\item Trocar mensagens por meio de um \textit{socket} na camada TCP;
-	
 \end{itemize}
 
+Essas funcionalidades são primordiais para o funcionamento do projeto, uma vez que para trocar mensagens com o aplicativo \textit{mobile} a placa deve conectar em uma rede Wi-Fi com acesso à internet. 
 
+Com a o acesso à internet, é possível conectar e trocar mensagens com o \textit{broker} MQTT a partir do tópico escolhido.
 
 \subsection{\textit{Driver} de controle dos periféricos}
 
