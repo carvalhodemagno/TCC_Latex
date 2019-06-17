@@ -48,14 +48,14 @@ Foram adicionados 2 (dois) \textit{light-emitting diodes} (LEDs) do tipo \textit
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\columnwidth]{figuras/LED_SMD}
+	\includegraphics[width=0.3\columnwidth]{figuras/LED_SMD}
 	\caption{LED SMD \cite{LED_SMD}.}
 	\label{fig:LED_SMD}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\columnwidth]{figuras/Push_Button}
+	\includegraphics[width=0.3\columnwidth]{figuras/Push_Button}
 	\caption{Botão do tipo \textit{push} \cite{Push_Button}.}
 	\label{fig:Push_Button}
 \end{figure}
@@ -73,7 +73,7 @@ Para o \textbf{Circuito de Ativação do Condicionador de Ar}, o principal compone
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\columnwidth]{figuras/srd-05vdc-sl-c}
+	\includegraphics[width=0.3\columnwidth]{figuras/srd-05vdc-sl-c}
 	\caption{Relé SRD-05VDC-SL-C \cite{SRD-05VDC-SL-C_imagem}.}
 	\label{fig:srd-05vdc-sl-c}
 \end{figure}
@@ -91,14 +91,14 @@ Para o \textbf{Circuito de Sensoriamento}, o componente escolhido para fazer as 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\columnwidth]{figuras/MCP39F521}
+	\includegraphics[width=0.3\columnwidth]{figuras/MCP39F521}
 	\caption{Circuito Integrado (CI) MCP39F521 \cite{MCP39F521}.}
 	\label{fig:MCP39F521}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\columnwidth]{figuras/MCP9700}
+	\includegraphics[width=0.3\columnwidth]{figuras/MCP9700}
 	\caption{Circuito Integrado MCP9700 \cite{MCP9700}.}
 	\label{fig:MCP9700}
 \end{figure}
@@ -118,12 +118,20 @@ Para elaboração inicial do \textit{firmware}, foi utilizado o módulo NodeMCU Lol
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\columnwidth]{figuras/nodemcu_lol1n}
+	\includegraphics[width=0.35\columnwidth]{figuras/nodemcu_lol1n}
 	\caption{Módulo NodeMCU Lol1n \cite{nodemcu_lolin}.}
 	\label{fig:nodemcu_lol1n}
 \end{figure}
 
-O desenvolvimento do \textit{firmware} foi dividido em três partes principais: Comunicação sob o protocolo MQTT por meio da interface Wi-Fi, \textit{Driver} de controle dos periféricos e Monitoramento dos sensores. 
+A partir do levantamento de requisitos, foi possível elaborar um algoritmo da funcionamento do \textit{firmware}, representando na figura \ref{fig:Firmware_Block_Diagram}, capaz de englobar as funcionalidades previamente levantadas no capítulo \ref{chapter:arquitetura_requisitos}. Tal diagrama foi elaborado com o intuito de guiar e facilitar o desenvolvimento deste pilar do projeto, a partir dele também foi possível sedimentar o desenvolvimento do \textit{firmware} em três partes principais: Comunicação sob o protocolo MQTT por meio da interface Wi-Fi, \textit{Driver} de controle dos periféricos e Monitoramento dos sensores. \underline{VERIFICAR SE EU DEVE ESCREVER AS FUNCIONALIDADES NOVAMENTE AQUI.}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.42\columnwidth]{figuras/Firmware_Block_Diagram}
+	\caption{Diagrama em blocos do algoritmo de funcionamento do \textit{firmware}.}
+	\label{fig:Firmware_Block_Diagram}
+\end{figure}
+
 
 \subsection{Comunicação sob o protocolo MQTT por meio da interface Wi-Fi}
 Conforme citado na seção \ref{section_hardware}, o ESP8266EX apresenta a interface Wi-Fi integrada ao CI, característica que facilita o desenvolvimento do \textit{firmware} para as funcionalidades básicas do Wi-Fi como: 
@@ -136,11 +144,39 @@ Conforme citado na seção \ref{section_hardware}, o ESP8266EX apresenta a interfa
 
 Essas funcionalidades são primordiais para o funcionamento do projeto, uma vez que para trocar mensagens com o aplicativo \textit{mobile} a placa deve conectar em uma rede Wi-Fi com acesso à internet. 
 
-Com a o acesso à internet, é possível conectar e trocar mensagens com o \textit{broker} MQTT a partir do tópico escolhido.
+Conectada à uma rede com acesso à internet, a placa é capaz de comunicar-se com o \textit{broker} MQTT e trocar mensagens, a partir do tópico escolhido. Conforme a figura \ref{fig:Firmware_Block_Diagram}, após obter êxito na comunicação com o \textit{broker}, o microcontrolador realiza o \textit{subscribe} no tópico de recebimento de mensagens e espera por novas requisições.
+
+Cada funcionalidade foi representada por um tipo de mensagem, conforme a tabela \ref{table:mensagens_mqtt}, para que o microcontrolador fosse capaz de interpretar, executar e responder às requisições provenientes do aplicativo mobile, conforme o fluxo representado pela figura. 
+
+\begin{table}[h!]
+	\caption{Mensagens de requisições de funcionalidades}	
+	\label{table:mensagens_mqtt}
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			Mensagem & Funcionalidade \\ \hline
+			"AC\_On" & Ligar condicionador de ar \\ \hline
+			"AC\_Off" & Desligar condicionador de ar \\ \hline
+			"Energy\_Info" & Informar valores de energia elétrica \\ \hline
+			"Presence\_Sensor" & Informar se há ou não presença humana\\ \hline
+
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\columnwidth]{figuras/firmware_mensagem_placa_app}
+	\caption{Fluxo de requisição no ponto de vista do \textit{firmware}.}
+	\label{fig:firmware_mensagem_placa_app}
+\end{figure}
 
 \subsection{\textit{Driver} de controle dos periféricos}
 
 \subsection{Monitoramento dos sensores}
+
+
+
 
 
 
