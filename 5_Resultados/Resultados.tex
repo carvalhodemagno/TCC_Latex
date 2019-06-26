@@ -22,8 +22,7 @@ Após o desenvolvimento da camada de comunicação e a camada de interação com o us
 	\label{fig:app_resultado}
 \end{figure}
 
-\section{Avaliação do circuito de medição de energia elétrica}
-\label{sec:aval_medidor_energia}
+Em seguida à embarcação do \textit{firmware} e a instalação do aplicativo no \textit{smartphone}, foi possível realizar a integração das partes do projeto e avaliar o desempenho das funcionalidades proposta no Capítulo \ref{chapter:arquitetura_requisitos}. Para isso, foi elaborado um diagrama de conexão entre a carga (condicionador de ar) e o \textit{hardware} implementado, representado pela figura \ref{fig:hardware_connection_diagram}. Tal diagrama auxiliou na conexão da rede elétrica, a placa e o condicionador de ar.
 
 \begin{figure}[H]
 	\centering
@@ -32,6 +31,19 @@ Após o desenvolvimento da camada de comunicação e a camada de interação com o us
 	\label{fig:hardware_connection_diagram}
 \end{figure}
 
+\section{Testes das funcionalidades com o condicionador de ar}
+
+Para realizar os testes das funcionalidades, foi utilizado o condicionador de ar representado pela figura \ref{fig:ar_condicionado_multizone}. Como este condicionador de ar é do tipo \textit{split}, aquele no qual a central condensadora e a evaporado são separadas, a tensão elétrica de alimentação é 220 V, com isso foi utilizada uma contatora controlada por esta mesma tensão, lembrando que o uso de uma contatora controlada por tensão diferente do condicionador de ar pode levar ao mal funcionamento do sistema.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\columnwidth]{figuras/ar_condicionado_multizone}
+	\caption{Condicionador de ar usado para testes.}
+	\label{fig:ar_condicionado_multizone}
+\end{figure}
+
+Com o diagrama em mãos, foi feita a conexão do protótipo com o condicionador de ar, abrindo seu conjunto arstop e modificando a conexão já existente com a rede elétrica. Para as conexões foram usados 2 tipos de fiação, um de 6mm de bitola para a alimentação da carga, onde há a maior quantidade de corrente circulando, e um de 1mm para alimentação da placa e para acionamento da contatora, onde a circulação de corrente não é alta. Na figura \ref{fig:conexao_pcb_ar_condicionado}, é possível ver o cabo de 6mm em verde, o cabo de 1mm em branco e os cabos pretos são a alimentação elétrica da carga. O conjunto arstop do condicionador de ar já apresentava proteção para a carga com o uso de um disjuntor bipolar, que foi mantido para execução dos testes.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\columnwidth]{figuras/conexao_pcb_ar_condicionado}
@@ -39,12 +51,42 @@ Após o desenvolvimento da camada de comunicação e a camada de interação com o us
 	\label{fig:conexao_pcb_ar_condicionado}
 \end{figure}
 
+Em seguida o sistema completo foi testado com o uso do aplicativo para fazer as requisições. A imagem \ref{fig:respostas_app} mostra as repostas das requisições após a execução.
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\columnwidth]{figuras/ar_condicionado_multizone}
-	\caption{Condicionador de ar usado para testes.}
-	\label{fig:ar_condicionado_multizone}
+	\begin{subfigure}{0.3\textwidth}
+		\centering
+		\includegraphics[width=0.75\columnwidth]{figuras/integration_timer_on}
+		\caption{Requisição de temporizador para ligar.}
+		\label{fig:integration_timer_on}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\centering
+		\includegraphics[width=0.75\columnwidth]{figuras/integration_timer_off}
+		\caption{Requisição de temporizador para desligar.}
+		\label{fig:integration_timer_off}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\centering
+		\includegraphics[width=0.75\columnwidth]{figuras/integration_person_detected}
+		\caption{Requisição de presença humana quando detectada.}
+		\label{fig:integration_person_detected}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\centering
+		\includegraphics[width=0.75\columnwidth]{figuras/integration_person_not_detected}
+		\caption{Requisição de presença humana quando não detectada.}
+		\label{fig:integration_person_not_detected}
+	\end{subfigure}
+	\caption{Medições realizadas pela placa em comparação ao alicate amperímetro ET-3367C.}
+	\label{fig:respostas_app}
 \end{figure}
+
+Levando em consideração o acesso à internet para realizar a comunicação entre o aplicativo e o \textit{hardware}, o sistema apresentou respostas rápidas às requisições feitas pelo usuário. Entretanto, as funcionalidades de escolher horário, tanto para ligar quanto para desligar, apresentaram uma demora de 15 segundos, em média, a serem executadas no horário escolhido. Isso é devido ao tempo necessário para a atualização do horário no servidor onde o \textit{hardware} consulta tais informações.
+
+\section{Avaliação do circuito de medição de energia elétrica}
+\label{sec:aval_medidor_energia}
 
 \begin{figure}[H]
 	\centering
@@ -53,169 +95,35 @@ Após o desenvolvimento da camada de comunicação e a camada de interação com o us
 	\label{fig:alicate_amperimetro_minipa}
 \end{figure}
 
-\begin{table}[h!]
-	\caption{Medição da frequência}	
-	\label{table:medicao_frequencia}
-	\begin{center}
-		\begin{tabular}{|C{4cm}|C{4cm}|C{4cm}|}
-			\hline
-			Medidas de frequência pela placa [Hz] & Medidas de frequência pelo alicate amperímetro [Hz] & Erro [\%] \\ \hline
-			59.91 & 60.03 & -0.20 \\ \hline
-			59.94 & 60.06 & -0.20 \\ \hline
-			59.89 & 60.01 & -0.20 \\ \hline
-			59.89 & 60.02 & -0.22 \\ \hline
-			59.89 & 60.02 & -0.22 \\ \hline
-			59.94 & 59.99 & -0.08 \\ \hline
-			59.91 & 60.00 & -0.15 \\ \hline
-			59.91 & 59.98 & -0.12 \\ \hline
-			59.94 & 60.02 & -0.13 \\ \hline
-			59.89 & 60.04 & -0.25 \\ \hline
-			59.89 & 59.99 & -0.17 \\ \hline
-			59.94 & 59.98 & -0.07 \\ \hline
-			59.89 & 60.00 & -0.18 \\ \hline
-			59.94 & 60.01 & -0.12 \\ \hline
-			59.89 & 60.02 & -0.22 \\ \hline
-			59.84 & 59.95 & -0.18 \\ \hline
-			59.96 & 60.02 & -0.10 \\ \hline
-			59.86 & 59.98 & -0.20 \\ \hline
-			59.86 & 59.98 & -0.20 \\ \hline
-			59.94 & 60.03 & -0.15 \\ \hline
-			59.89 & 59.99 & -0.17 \\ \hline
-			59.91 & 59.97 & -0.10 \\ \hline
-			59.91 & 59.99 & -0.13 \\ \hline
-			59.91 & 60.01 & -0.17 \\ \hline
-			59.94 & 60.01 & -0.12 \\ \hline
-			59.99 & 60.02 & -0.05 \\ \hline
-			59.94 & 60.03 & -0.15 \\ \hline
-			59.89 & 60.00 & -0.18 \\ \hline
-			59.94 & 59.98 & -0.07 \\ \hline
-			59.89 & 59.99 & -0.17 \\ \hline	
-		\end{tabular}
-	\end{center}
-\end{table}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{1\textwidth}
+		\centering
+		\includegraphics[width=0.75\columnwidth]{figuras/plot_frequencia.eps}
+		\caption{Medição de frequência.}
+		\label{fig:plot_frequencia.eps}
+	\end{subfigure}
 
-\begin{table}[h!]
-	\caption{Medição da corrente alternada}	
-	\label{table:medicao_corrente}
-	\begin{center}
-	\begin{tabular}{|C{4cm}|C{4cm}|C{4cm}|}
-		\hline
-		 Medidas de corrente  pela placa [A] &Medidas de corrente  pelo alicate amperímetro [A] & Erro [\%] \\ \hline
-		 4.21 & 4.20 & 0.24 \\ \hline
-		 4.27 & 4.32 & -1.16 \\ \hline
-		 4.45 & 4.46 & -0.22 \\ \hline
-		 4.49 & 4.51 & -0.44 \\ \hline
-		 4.60 & 4.60 & 0.00 \\ \hline
-		 4.60 & 4.61 & -0.22 \\ \hline
-		 4.63 & 4.63 & 0.00 \\ \hline
-		 4.66 & 4.67 & -0.21 \\ \hline
-		 4.71 & 4.71 & 0.00 \\ \hline
-		 4.73 & 4.73 & 0.00 \\ \hline
-		 4.78 & 4.77 & 0.21 \\ \hline
-		 4.81 & 4.08 & 0.21 \\ \hline
-		 4.84 & 4.86 & -0.41 \\ \hline
-		 4.88 & 4.89 & -0.20 \\ \hline
-		 4.89 & 4.90 & -0.20 \\ \hline
-		 4.93 & 4.93 & 0.00 \\ \hline
-		 4.95 & 4.96 & -0.20 \\ \hline
-		 4.96 & 5.00 & -0.80 \\ \hline
-		 5.03 & 5.04 & -0.20 \\ \hline
-		 5.04 & 5.04 & 0.00 \\ \hline
-		 5.07 & 5.10 & -0.59 \\ \hline
-		 5.10 & 5.11 & -0.20 \\ \hline
-		 5.15 & 5.14 & 0.19 \\ \hline
-		 5.11 & 5.14 & -0.58 \\ \hline
-		 5.14 & 5.14 & 0.00 \\ \hline
-		 5.16 & 5.17 & -0.19 \\ \hline
-		 5.16 & 5.18 & -0.39 \\ \hline
-		 5.19 & 5.19 & 0.00 \\ \hline
-		 5.25 & 5.25 & 0.00 \\ \hline
-		 5.26 & 5.27 & -0.19 \\ \hline
-		 	
-	\end{tabular}
-\end{center}
-\end{table}
+	\begin{subfigure}{1\textwidth}
+		\centering
+		\includegraphics[width=0.75\columnwidth]{figuras/plot_corrente.eps}
+		\caption{Medição de corrente.}
+		\label{fig:plot_corrente.eps}
+	\end{subfigure}
 
-\begin{table}[h!]
-	\caption{Medição da tensão alternada}	
-	\label{table:medicao_tensao}
-	\begin{center}
-	\begin{tabular}{|C{4cm}|C{4cm}|C{4cm}|}
-		\hline
-		Medidas de tensão alternada pela placa [V] & Medidas de tensão alternada pelo alicate amperímetro [V] & Erro [\%] \\ \hline
-		221.8 & 222.8 & -0.45 \\ \hline
-		221.6 & 222.3 & -0.31 \\ \hline
-		221.6 & 222.4 & -0.36 \\ \hline
-		222.8 & 223.1 & -0.13 \\ \hline
-		222.5 & 223.5 & -0.45 \\ \hline
-		222.0 & 223.6 & -0.72 \\ \hline
-		222.4 & 223.6 & -0.54 \\ \hline
-		222.3 & 223.5 & -0.54 \\ \hline
-		221.3 & 223.2 & -0.85 \\ \hline
-		221.6 & 222.5 & -0.40 \\ \hline
-		221.4 & 222.6 & -0.54 \\ \hline
-		221.3 & 222.2 & -0.41 \\ \hline
-		222.1 & 222.3 & -0.09 \\ \hline
-		222.0 & 223.0 & -0.45 \\ \hline
-		222.3 & 222.9 & -0.27 \\ \hline
-		221.9 & 223.1 & -0.54 \\ \hline
-		222.0 & 223.0 & -0.45 \\ \hline
-		222.3 & 223.1 & -0.36 \\ \hline
-		221.5 & 222.7 & -0.54 \\ \hline
-		221.2 & 222.6 & -0.63 \\ \hline
-		221.5 & 222.7 & -0.54 \\ \hline
-		221.3 & 222.4 & -0.49 \\ \hline
-		221.6 & 222.7 & -0.49 \\ \hline
-		221.6 & 222.6 & -0.45 \\ \hline
-		222.3 & 223.3 & -0.45 \\ \hline
-		222.3 & 223.3 & -0.45 \\ \hline
-		222.1 & 223.4 & -0.58 \\ \hline
-		222.2 & 223.5 & -0.58 \\ \hline
-		221.5 & 223.4 & -0.85 \\ \hline
-		221.8 & 222.8 & -0.45 \\ \hline
-		
-	\end{tabular}
-\end{center}
-\end{table}
+	\begin{subfigure}{1\textwidth}
+		\centering
+		\includegraphics[width=0.75\columnwidth]{figuras/plot_tensao.eps}
+		\caption{Medição de tensão.}
+		\label{fig:plot_tensao.eps}
+	\end{subfigure}
 
-\begin{table}[h!]
-	\caption{Medição da potência ativa}	
-	\label{table:medicao_potencia_ativa}
-	\begin{center}
-		\begin{tabular}{|C{4cm}|C{4cm}|C{4cm}|}
-			\hline
-			Medidas de potência ativa pela placa [W] & Medidas de potência ativa pelo alicate amperímetro [W] & Erro [\%] \\ \hline
-			934.45 & 935.76 & -0.14 \\ \hline
-			958.61 & 960.34 & -0.18 \\ \hline
-			990.61 & 991.90 & -0.13 \\ \hline
-			1005.48 & 1006.18 & -0.07 \\ \hline
-			1026.35 & 1028.10 & -0.17 \\ \hline
-			1029.15 & 1030.80 & -0.16 \\ \hline
-			1033.51 & 1035.27 & -0.17 \\ \hline
-			1042.49 & 1043.75 & -0.12 \\ \hline
-			1049.48 & 1051.27 & -0.17 \\ \hline
-			1051.48 & 1052.43 & -0.09 \\ \hline
-			1060.85 & 1061.80 & -0.09 \\ \hline
-			1064.85 & 1066.56 & -0.16 \\ \hline
-			1078.97 & 1080.38 & -0.13 \\ \hline
-			1089.60 & 1090.47 & -0.08 \\ \hline
-			1090.90 & 1092.21 & -0.12 \\ \hline
-			1099.00 & 1099.88 & -0.08 \\ \hline
-			1104.09 & 1106.08 & -0.18 \\ \hline
-			1114.50 & 1115.50 & -0.09 \\ \hline
-			1121.62 & 1122.41 & -0.07 \\ \hline
-			1121.01 & 1121.90 & -0.08 \\ \hline
-			1134.18 & 1135.77 & -0.14 \\ \hline
-			1135.21 & 1136.46 & -0.11 \\ \hline
-			1143.65 & 1144.68 & -0.09 \\ \hline
-			1142.79 & 1144.16 & -0.12 \\ \hline
-			1146.27 & 1147.76 & -0.13 \\ \hline
-			1153.08 & 1154.46 & -0.12 \\ \hline
-			1155.13 & 1157.21 & -0.18 \\ \hline
-			1158.23 & 1159.97 & -0.15 \\ \hline
-			1171.56 & 1172.85 & -0.11 \\ \hline
-			1172.63 & 1174.16 & -0.13 \\ \hline
-		\end{tabular}
-	\end{center}
-\end{table}
-
+	\begin{subfigure}{1\textwidth}
+		\centering
+		\includegraphics[width=0.75\columnwidth]{figuras/plot_potencia.eps}
+		\caption{Medição de potência.}
+		\label{fig:plot_potencia.eps}
+	\end{subfigure}
+	\caption{Medições realizadas pela placa em comparação ao alicate amperímetro ET-3367C.}
+	\label{fig:comparacao_medicao}
+\end{figure}
