@@ -3,9 +3,131 @@
 \label{chapter:arquitetura_requisitos}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+A proposta deste trabalho é desenvolver e implementar um sistema de monitoramento e controle remoto para condicionadores de ar baseado em IoT. Para ter uma visão geral sobre o sistema, a figura \ref{fig:Architecture_Block_Diagram} ilustra a arquitetura como um todo. 
+
+Sendo baseado nos conceitos de IoT, o sistema incorpora um dispositivo responsável por controlar e monitorar o alvo (condicionador de ar), chamado aqui de \textit{hardware}, a partir de certa inteligência incorporada, chamada aqui de \textit{firmware}. O usuário, a partir de um aplicativo \textit{mobile}, chamado aqui de \textit{software}, solicita e visualiza as informações relacionadas ao sistema a partir de requisições ao \textit{hardware}. As possíveis requisições são: obter consumo de energia elétrica, verificar presença humana no ambiente no qual o sistema está instalado e ligar ou desligar o condicionador de ar, além de poder realizar a escolha do horário para ligar e desligar previamente.  
+
+A comunicação entre o \textit{hardware} e o \textit{software} é por meio do protocolo MQTT, sendo gerenciada pelo \textit{broker}.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\columnwidth]{figuras/Architecture_Block_Diagram}
 	\caption{Arquitetura implementada.}
 	\label{fig:Architecture_Block_Diagram}
+\end{figure}
+
+
+\section{Materiais e métodos}
+\label{sec:metodos}
+
+Para cumprir com os requisitos do projeto, o \textit{hardware} foi dividido em 3 circuitos eletrônicos principais, sendo eles: \textbf{Circuito de Conexão com \textit{Wi-Fi}}, \textbf{Circuito de Ativação do Condicionador de Ar} e \textbf{Circuito de Medição e Sensoriamento}. 
+
+O Circuito de Conexão com \textit{Wi-Fi} é  responsável por trocar informações com o aplicativo mobile, utilizando o protocolo MQTT.
+
+O Circuito de Ativação do Condicionador de Ar é responsável controlar alimentação elétrica entregue ao dispositivo.
+
+E o Circuito de Sensoriamento é responsável por realizar as medições provenientes da rede elétrica - como tensão, corrente, fator de potência, potência ativa e frequência - com intuito de definir se os níveis estão adequados para o perfeito funcionamento do condicionador de ar e verificar a presença ou ausência humana onde o equipamento está instalado.
+
+Para que haja o funcionamento destes circuitos eletrônicos, é preciso que ocorra o desenvolvimento de um esquemático elétrico e de um desenho da placa de circuito impresso (PCB), também conhecido como \textit{layout}. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Componentes utilizados} 
+Para realizar a escolha dos componentes foi levado em conta principalmente o custo, visando tornar o produto atrativo ao usuário final, ou seja, o consumidor.
+
+Para suprir as funcionalidades do \textbf{Circuito de Conexão com \textit{Wi-Fi}}, o componente principal escolhido foi o módulo ESP12-F, representado na figura \ref{fig:ESP12-F}, que contém um microcontrolador juntamente com o circuito de radio-frequência (RF) para o \textit{Wi-Fi} e um LED indicativo. O microcontrolador contido no módulo é o ESP8266EX, representado na figura \ref{fig:ESP8266EX}, e suas principais características são\cite{ESP8266EX_DATASHEET}:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\columnwidth]{figuras/ESP12-F}
+	\caption{Módulo ESP12-F\cite{AiThinker}.}
+	\label{fig:ESP12-F}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\columnwidth]{figuras/ESP8266EX}
+	\caption{Microcontrolador ESP8266EX \cite{ESP8266_MICRO}.}
+	\label{fig:ESP8266EX}
+\end{figure}
+
+\begin{itemize}
+	\item Microprocessador de 32 bits;
+	\item \textit{Wi-Fi} integrado sob o protocolo 802.11 b/g/n, na frequência de 2.4GHz;
+	\item Interface periféricas: UART, SDIO, SPI, I2C, I2S, GPIO, ADC e PWM;
+	\item Tensão de operação: 2,5V a 3,6V;
+	\item Corrente de operação: em média 80mA;
+	\item Tamanho: 5 mm x 5 mm;
+	\item 32 pinos;
+	\item Interface de gravação tanto por UART, quanto por \textit{over-the-air} (OTA);
+	\item Até 4 perfis de baixo consumo de energia.
+\end{itemize}
+
+Foram adicionados 2 (dois) \textit{light-emitting diodes} (LEDs) do tipo \textit{suface mounting device} (SMD), representado na figura \ref{fig:LED_SMD}, a este circuito também, um para indicar comunicação com o celular pelo protocolo MQTT e um para indicar se a alimentação elétrica da PCB está nos níveis corretos, assim como 2 (dois) botões do tipo \textit{push-buttom}, representado na figura \ref{fig:Push_Button}, para realizar a gravação do \textit{firmware} no microcontrolador.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\columnwidth]{figuras/LED_SMD}
+	\caption{LED SMD \cite{LED_SMD}.}
+	\label{fig:LED_SMD}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\columnwidth]{figuras/Push_Button}
+	\caption{Botão do tipo \textit{push} \cite{Push_Button}.}
+	\label{fig:Push_Button}
+\end{figure}
+
+Para o \textbf{Circuito de Ativação do Condicionador de Ar}, o principal componente escolhido foi o relé SRD-05VDC-SL-C, representado na figura \ref{fig:srd-05vdc-sl-c}, quais características principais são:
+
+\begin{itemize}
+	\item Tensão de ativação do enrolamento: 5 V;
+	\item Corrente nominal do enrolamento: 89,3 mA;
+	\item Resistência do enrolamento: 55 $ \Omega $;
+	\item Consumo de potência do enrolamento: 0,36 W;
+	\item Máxima tensão admissível no chave: 110 VDC ou 225 VAC;
+	\item Capacidade de corrente da chave para carga do tipo resistiva: 10 A para 125 VAC e 7 A para 240 VAC.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\columnwidth]{figuras/srd-05vdc-sl-c}
+	\caption{Relé SRD-05VDC-SL-C \cite{SRD-05VDC-SL-C_imagem}.}
+	\label{fig:srd-05vdc-sl-c}
+\end{figure}
+
+O relé SRD-05VDC-SL-C foi utilizado para ativar uma contatora que, por sua vez, alimenta o condicionador de ar. Como o objetivo foi de ativar qualquer tipo de condicionador de ar, utilizou-se contatoras, representadas na imagem \ref{fig:contatora}, que aceitassem tanto 110 VAC quanto 220 VAC no enrolamento de alimentação.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\columnwidth]{figuras/contatora}
+	\caption{Contatora Telemecanique \cite{contatora_ref}.}
+	\label{fig:contatora}
+\end{figure}
+
+Para o \textbf{Circuito de Sensoriamento}, o componente escolhido para fazer as medições de tensão, corrente, fator de potência e frequência da rede de energia elétrica, informações essas suficientes para definir se ela está adequada para alimentar o condicionador de ar, foi MCP39F521, representado na figura \ref{fig:MCP39F521}. O MCP39F521 é um dispositivo de monitoramento de energia monofásico completo e altamente integrado, projetado para medição em tempo real de energia de entrada para fontes de alimentação de corrente alternada e de corrente contínua, unidades de distribuição de energia, consumidor e aplicações industriais. Inclui ADCs delta-sigma de canal duplo, um mecanismo de cálculo de 16 bits, EEPROM e uma interface I2C de dois fios flexível. Uma referência integrada de tensão de baixa derivação com 10 ppm/°C além de 94,5 dB de desempenho de sinal-ruído e taxa de distorção (SINAD) em cada canal de medição permite melhor que 0,1 $ \% $ de projetos precisos em uma faixa dinâmica de 4000:1\cite{MCP39F521_Datasheet}. Foi adicionado também um sensor de temperatura analógico, por questões de segurança (superaquecimento), para monitorar a temperatura da PCB, MCP9700 que é representado pela figura \ref{fig:MCP9700}.
+
+Para realizar as medições de presença humana o componente utilizado foi o sensor EKMC1601111, ilustrado pela figura \ref{fig:EKMC1601111}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\columnwidth]{figuras/MCP39F521}
+	\caption{Circuito Integrado (CI) MCP39F521 \cite{MCP39F521}.}
+	\label{fig:MCP39F521}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\columnwidth]{figuras/MCP9700}
+	\caption{Circuito Integrado MCP9700 \cite{MCP9700}.}
+	\label{fig:MCP9700}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\columnwidth]{figuras/EKMC1601111}
+	\caption{Sensor de presença EKMC1601111 \cite{EKMC1601111}.}
+	\label{fig:EKMC1601111}
 \end{figure}
