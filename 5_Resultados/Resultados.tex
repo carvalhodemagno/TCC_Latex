@@ -22,7 +22,7 @@ Após o desenvolvimento da camada de comunicação e a camada de interação com o us
 	\label{fig:app_resultado}
 \end{figure}
 
-Em seguida à embarcação do \textit{firmware} e a instalação do aplicativo no \textit{smartphone}, foi possível realizar a integração das partes do projeto e avaliar o desempenho das funcionalidades proposta no Capítulo \ref{chapter:arquitetura_requisitos}. Para isso, foi elaborado um diagrama de conexão entre a carga (condicionador de ar) e o \textit{hardware} implementado, representado pela figura \ref{fig:hardware_connection_diagram}. Tal diagrama auxiliou na conexão da rede elétrica, a placa e o condicionador de ar.
+Em seguida à embarcação do \textit{firmware} e a instalação do aplicativo no \textit{smartphone}, foi possível realizar a integração das partes do projeto e avaliar o desempenho das funcionalidades proposta no Capítulo \ref{chapter:arquitetura_requisitos}. Para isso, foi elaborado um diagrama de conexão entre a carga (condicionador de ar) e o \textit{hardware} implementado, representado pela figura \ref{fig:hardware_connection_diagram}. Tal diagrama auxiliou na conexão entre a rede elétrica, o hardware e o condicionador de ar.
 
 \begin{figure}[H]
 	\centering
@@ -33,7 +33,7 @@ Em seguida à embarcação do \textit{firmware} e a instalação do aplicativo no \te
 
 \section{Testes das funcionalidades com o condicionador de ar}
 
-Para realizar os testes das funcionalidades, foi utilizado o condicionador de ar representado pela figura \ref{fig:ar_condicionado_multizone}. Como este condicionador de ar é do tipo \textit{split}, aquele no qual a central condensadora e a evaporado são separadas, a tensão elétrica de alimentação é 220 V, com isso foi utilizada uma contatora controlada por esta mesma tensão, lembrando que o uso de uma contatora controlada por tensão diferente do condicionador de ar pode levar ao mal funcionamento do sistema.
+Para realizar os testes das funcionalidades, foi utilizado o condicionador de ar representado pela figura \ref{fig:ar_condicionado_multizone}. Como este condicionador de ar é do tipo \textit{split}, aquele no qual a central condensadora e a evaporadora são separadas, a tensão elétrica de alimentação é 220 V, com isso foi utilizada uma contatora controlada por esta mesma tensão, lembrando que o uso de uma contatora controlada por tensão diferente do condicionador de ar pode levar ao mal funcionamento do sistema.
 
 \begin{figure}[H]
 	\centering
@@ -113,7 +113,7 @@ Em seguida, o sistema completo foi testado com o uso do aplicativo para realizar
 	\label{fig:respostas_app}
 \end{figure}
 
-Levando em consideração o acesso à internet para realizar a comunicação entre o aplicativo e o \textit{hardware}, o sistema apresentou respostas rápidas às requisições feitas pelo usuário. Entretanto, as funcionalidades de escolher horário, tanto para ligar quanto para desligar, apresentaram uma demora de 15 segundos, em média, a serem executadas após horário escolhido ser atingido. Isso é devido ao tempo necessário para a atualização do horário no servidor onde o \textit{firmware} consulta tais informações.
+Levando em consideração o acesso à internet para realizar a comunicação entre o aplicativo e o \textit{hardware}, o sistema apresentou respostas rápidas às requisições feitas pelo usuário. Entretanto, as funcionalidades de escolher horário, tanto para ligar quanto para desligar, apresentaram uma demora de 15 segundos, em média, a serem executadas após horário escolhido ser atingido. Esta variação e justificada em razão do tempo necessário para a atualização do horário no servidor onde o \textit{firmware} consulta tais informações.
 
 \section{Avaliação do circuito de medição de energia elétrica}
 \label{sec:aval_medidor_energia}
@@ -133,7 +133,7 @@ Com o objetivo de avaliar o desempenho do circuito de medição de energia elétric
 	\label{fig:alicate_amperimetro_minipa}
 \end{figure}
 
-É possível observar uma representação gráfica, nas figuras \ref{fig:graficos_medicao_corrente}, \ref{fig:graficos_medicao_frequencia}, \ref{fig:graficos_medicao_potencia} e \ref{fig:grafios_medicao_tensão}, do comparativo entre as medições realizadas pelo protótipo e pelo alicate amperímetro, gerada a partir dos dados contidos nas tabelas do Apêndice \ref{apendice:medicoes}. 
+É possível observar uma representação gráfica, nas figuras \ref{fig:grafios_medicao_tensão}, \ref{fig:graficos_medicao_corrente}, \ref{fig:graficos_medicao_frequencia} e \ref{fig:graficos_medicao_potencia}, do comparativo entre as medições realizadas pelo protótipo e pelo alicate amperímetro juntamente com os erros relativos e absolutos, gerada a partir dos dados contidos nas tabelas do Apêndice \ref{apendice:medicoes}. 
 
 As figuras \ref{fig:plot_corrente.eps} e \ref{fig:plot_potencia.eps}, representam claramente o comportamento do consumo de energia pelo condicionador de ar quando acontece a partida do compressor para iniciar o resfriamento do ambiente. 
 

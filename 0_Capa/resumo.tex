@@ -2,10 +2,15 @@
 % -- Resumo %-------------------------------------------------------------------
 \chapter*{Resumo}
 \thispagestyle{empty}
-
+Este trabalho apresenta um sistema de monitoramento e controle remoto para condicionadores de ar de baixo custo, que
+utiliza conceitos de Internet das Coisas. A principal ferramenta utilizada foi o microcontrolador ESP8266, que através do protocolo MQTT recebe e retorna requisições de um aplicativo \textit{mobile}. Foram utilizados um sensor de presença, para
+alertar o consumo desnecessário de energia, dispositivos de acionamento elétrico para acionar a carga e um medidor de energia elétrica foi desenvolvido para informar o consumo do condicionador de ar. Foi utilizado o protocolo Network Time Protocol para sincronizar o
+relógio do microprocessador, desta maneira foi possível ligar e desligar o condicionador de ar conforme horário escolhido no aplicativo. Para a programação do microcontrolador
+foi utilizada a linguagem de programação C++ juntamente com o software Arduino,
+que contém as bibliotecas de funções necessárias para a realização do trabalho. 
 
 \vspace*{\stretch{1}} %texto se adapta para ocupar toda a página
 
-\noindent \textsf{Palavras-chave:} .
+\noindent \textsf{Palavras-chave:} Internet das coisas, condicionador de ar, ESP8266, MQTT, controle remoto.
 
 \cleardoublepage

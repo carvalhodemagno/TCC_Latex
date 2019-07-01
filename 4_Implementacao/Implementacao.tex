@@ -1,33 +1,33 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Desenvolvimento e Implementação}
 \label{chapter:desenvolvimento}
-Este capítulo apresenta detalhadamente o que foi feito para desenvolver e implementar o sistema de gerenciamento e controle de um condicionador de ar, levando em conta 3 pilares principais: \textit{Hardware}, \textit{Firmware} e \textit{Software}.
+Este capítulo apresenta detalhadamente o que foi feito para desenvolver e implementar o sistema de gerenciamento e controle remoto para condicionadores de ar, levando em conta 3 pilares principais: \textit{Hardware}, \textit{Firmware} e Aplicativo \textit{mobile}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\textit{Hardware}}
 \label{section_hardware}
 
-A partir dos circuitos elétricos previamente citados na seção \ref{sec:metodos}, foi realizado um estudo nos documentos de \textit{Reference Design} e \textit{Datasheets} disponibilizados pelos fabricantes dos CI's utilizados, de modo a verificar todas as considerações para o correto funcionamento dos circuitos. O documento principal utilizado foi o guia do usuário para o MCP39F521 \cite{MCP39f521_user_guide}, que auxiliou principalmente no \textbf{Circuito de Medição e Sensoriamento}. Elaborou-se então os esquemáticos elétricos, ilustrados nas figuras \ref{fig:Schematic_Power_Supply}, \ref{fig:Schematic_Core_Processor} e \ref{fig:Schematic_Meter}.
+A partir dos circuitos elétricos previamente citados na seção \ref{subsec:metodos_hardware}, foi realizado um estudo nos documentos de \textit{Reference Design} e \textit{Datasheets} disponibilizados pelos fabricantes dos CI's utilizados, de modo a verificar todas as considerações para o correto funcionamento dos circuitos. O documento principal utilizado foi o guia do usuário para o MCP39F521 \cite{MCP39f521_user_guide}, que auxiliou principalmente no \textbf{Circuito de Medição e Sensoriamento}. Elaborou-se então os esquemáticos elétricos, ilustrados nas figuras \ref{fig:Schematic_Power_Supply}, \ref{fig:Schematic_Core_Processor} e \ref{fig:Schematic_Meter}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\columnwidth]{figuras/Schematic_Power_Supply}
-	\caption{Esquemático elétrico da alimentação do circuito.}
+	\caption{Esquemático elétrico do Circuito de alimentação e de ativação do Condicionador de Ar.}
 	\label{fig:Schematic_Power_Supply}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\columnwidth]{figuras/Schematic_Core_Processor}
-	\caption{Esquemático elétrico referente ao microcontrolador.}
+	\caption{Esquemático elétrico referente ao Circuito do microcontrolador e de conexão com \textit{Wi-Fi}.}
 	\label{fig:Schematic_Core_Processor}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\columnwidth]{figuras/Schematic_Meter}
-	\caption{Esquemático elétrico do sistema de medição da energia elétrica.}
+	\caption{Esquemático elétrico do Circuito de Medição de energia elétrica e sensoriamento.}
 	\label{fig:Schematic_Meter}
 \end{figure}
 
@@ -112,20 +112,12 @@ Em seguida a definição de todos os componentes a serem utilizados na PCB, e as l
 
 \section{\textit{Firmware}}
 \label{section_firmware}
-Para elaboração inicial do \textit{firmware}, foi utilizado o módulo NodeMCU Lol1n, mostrado na figura \ref{fig:nodemcu_lol1n}, que contém um módulo ESP-12E e os circuitos de alimentação e gravação por interface USB já embutidos nele. Adotou-se esta metodologia, de utilizar um módulo com os circuitos prontos para uso, com intuito de diminuir o tempo de desenvolvimento e também para permitir a elaboração do \textit{firmware} antes da conclusão do desenvolvimento do \textit{hardware}, citado na seção \ref{section_hardware}.
+
+A partir das informações contidas no capítulo \ref{chapter:arquitetura_requisitos}, foi possível elaborar um algoritmo da funcionamento do \textit{firmware}, representando na figura \ref{fig:Firmware_Block_Diagram}, capaz de englobar as funcionalidades previamente levantadas. Tal diagrama foi elaborado com o intuito de guiar e facilitar o desenvolvimento deste pilar do projeto.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.35\columnwidth]{figuras/nodemcu_lol1n}
-	\caption{Módulo NodeMCU Lol1n \cite{nodemcu_lolin}.}
-	\label{fig:nodemcu_lol1n}
-\end{figure}
-
-A partir da descrição do sistema, foi possível elaborar um algoritmo da funcionamento do \textit{firmware}, representando na figura \ref{fig:Firmware_Block_Diagram}, capaz de englobar as funcionalidades previamente levantadas no capítulo \ref{chapter:arquitetura_requisitos}. Tal diagrama foi elaborado com o intuito de guiar e facilitar o desenvolvimento deste pilar do projeto, a partir dele também foi possível sedimentar o desenvolvimento do \textit{firmware} em três partes principais: Comunicação sob o protocolo MQTT por meio da interface Wi-Fi, \textit{Driver} de controle dos periféricos e Monitoramento dos sensores. \underline{VERIFICAR SE EU DEVO ESCREVER AS FUNCIONALIDADES NOVAMENTE AQUI.}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.42\columnwidth]{figuras/Firmware_Block_Diagram}
+	\includegraphics[width=0.328\columnwidth]{figuras/Firmware_Block_Diagram}
 	\caption{Diagrama em blocos do algoritmo de funcionamento do \textit{firmware}.}
 	\label{fig:Firmware_Block_Diagram}
 \end{figure}
@@ -134,15 +126,16 @@ A partir da descrição do sistema, foi possível elaborar um algoritmo da funciona
 \subsection{Comunicação sob o protocolo MQTT por meio da interface Wi-Fi}
 Conforme citado na seção \ref{section_hardware}, o ESP8266EX apresenta a interface Wi-Fi integrada ao CI, característica que facilita o desenvolvimento do \textit{firmware} para as funcionalidades básicas do Wi-Fi como: 
 \begin{itemize}
+	\setlength\itemsep{0em}
 	\item Conectar em uma rede Wi-Fi por meio do SSID e Senha;
 	\item Obtenção de IP nesta rede local;
 	\item Acesso à internet pela rede local;
 	\item Trocar mensagens por meio de um \textit{socket} na camada TCP;
 \end{itemize}
 
-Essas funcionalidades são primordiais para o funcionamento do projeto, uma vez que para trocar mensagens com o aplicativo \textit{mobile} a placa deve conectar em uma rede Wi-Fi com acesso à internet. 
+Essas funcionalidades são primordiais para o funcionamento do projeto, uma vez que para trocar mensagens com o aplicativo \textit{mobile} o \textit{hardware} deve conectar em uma rede Wi-Fi com acesso à internet. 
 
-Conectada à uma rede com acesso à internet, a placa é capaz de comunicar-se com o \textit{broker} MQTT e trocar mensagens, a partir do tópico escolhido. Conforme a figura \ref{fig:Firmware_Block_Diagram}, após obter êxito na comunicação com o \textit{broker}, o microcontrolador realiza o \textit{subscribe} no tópico de recebimento de mensagens e espera por novas requisições.
+Conectada à uma rede com acesso à internet, o \textit{hardware} é capaz de comunicar-se com o \textit{broker} MQTT e trocar mensagens, a partir do tópico escolhido. Conforme a figura \ref{fig:Firmware_Block_Diagram}, após obter êxito na comunicação com o \textit{broker}, o microcontrolador realiza o \textit{subscribe} no tópico de recebimento de mensagens e espera por novas requisições.
 
 Cada funcionalidade foi representada por um tipo de mensagem, conforme a tabela \ref{table:mqtt_mensagens}, para que o microcontrolador fosse capaz de interpretar, executar e responder às requisições provenientes do aplicativo mobile, conforme o fluxo representado pela figura \ref{fig:firmware_mensagem_placa_app}.
 
@@ -171,7 +164,7 @@ Cada funcionalidade foi representada por um tipo de mensagem, conforme a tabela 
 \end{figure}
 
 \subsection{\textit{Driver} de controle dos periféricos}
-Para que ocorra o acionamento do condicionador de ar, leitura dos valores de energia elétrica e verificação da presença humana, o \textit{firmware} deve ser capaz de enviar, receber e interpretar informações dos componentes de \textit{hardware}, citados na seção \ref{section_hardware}, para isso é implementada uma camada, chamada de \textit{Driver}, responsável por fazer esse intermédio entre o microcontrolador e estes periféricos.
+Conforme retratado na subseção \ref{subsec:metodos_firmware}, o \textit{Driver} é responsável por controlar os periféricos, garantindo que as funcionalidades, no mundo físico, sejam executadas. Para a aplicação, o \textit{driver} controla o acionamento do condicionador de ar, realiza a leitura dos valores de energia elétrica e verifica a presença humana a partir da leitura no sensor.
 
 Para acionar o condicionador de ar, o \textit{Driver} controla uma GPIO (General Purpose Input Output). Para "ligar" o dispositivo a GPIO mantem-se em nível lógico baixo e para "desligar" o dispositivo a GPIO mentem-se em nível lógico alto. Esta lógica invertida é dada pelo uso de um transistor do tipo NPN no circuito de acionamento implementado, ilustrado na figura \ref{fig:Schematic_Power_Supply}.
 
@@ -182,23 +175,18 @@ Para verificar a presença humana, o \textit{Driver} realiza a leitura de uma GPI
 
 \subsection{Monitoramento dos sensores}
 
-Baseando-se na descrição do sistema retratada no capítulo \ref{chapter:arquitetura_requisitos}, foram elaborados 2 (dois) algorítimos para o monitoramento dos sensores. O primeiro referente ao sensor responsável pela leitura da energia elétrica e os níveis aceitáveis para o funcionamento correto do condicionador de ar e o segundo referente ao sensor de presença no local onde o condicionador de ar está instalado.
+Baseando-se na descrição do sistema retratada no capítulo \ref{chapter:arquitetura_requisitos}, foram elaborados 2 (dois) algorítimos para o monitoramento dos sensores. O primeiro referente ao circuito responsável pela leitura da energia elétrica e os níveis aceitáveis para o funcionamento correto do condicionador de ar e o segundo referente ao sensor de presença no local onde o condicionador de ar está instalado.
 
 Em relação ao primeiro, o objetivo é garantir que os parâmetros de energia elétrica entregues ao condicionador de ar estejam suficientes para o perfeito funcionamento dele, considerando uma certa variação de 10\% dos valores de tensão alternada e frequência da rede elétrica, conforme citado no capítulo \ref{chapter:arquitetura_requisitos}. Portanto, para realizar esta proteção contra mal funcionamentos, foi desenvolvida uma rotina responsável por realizar leituras constantes no MCP39F521, desativando assim a alimentação do condicionador ao verificar algum parâmetro fora da variação aceita.
 
-Em relação ao segundo, o objetivo é informar ao usuário caso haja consumo de energia no condicionador de ar com ausência de pessoas no cômodo em que o dispositivo está instalado, possibilitando assim a economia de energia caso o usuário tenha esquecido aquele ligado. Portanto, para realizar esta funcionalidade, foi desenvolvida uma rotina capaz de verificar constantemente a presença humana, realizando leituras no sensor de presença, representando na figura \ref{fig:EKMC1601111}.
+Em relação ao segundo, o objetivo é informar ao usuário caso haja consumo de energia no condicionador de ar na ausência de pessoas no cômodo em que o dispositivo está instalado, possibilitando assim a economia de energia caso o usuário tenha esquecido aquele ligado. Portanto, para realizar esta funcionalidade, foi desenvolvida uma rotina capaz de verificar constantemente a presença humana, realizando leituras no sensor de presença, representando na figura \ref{fig:EKMC1601111}.
 
 
 \section{Aplicativo \textit{mobile}}
 \label{section_software}
 Para esta tarefa, foi realizada a análise da descrição do sistema, retratada no capítulo \ref{chapter:arquitetura_requisitos}, que permitiu levantar as funcionalidades a serem disponibilizadas ao usuário no aplicativo \textit{mobile}, sendo elas: ligar ou desligar o condicionador de ar, verificar o consumo de energia elétrica, verificar presença humana, escolher horário para ligar e para desligar o condicionador de ar.
 
-O aplicativo foi desenvolvido em 2 frentes, primeiramente a parte que o usuário não vê, como comunicação com a internet, as regras de comunicação com o \textit{hardware} implementado e etc, e depois a parte que o usuário vê e
-interage com, como os botões, caixas de texto e etc.
-
-Ou seja, para esta aplicação, a primeira parte é responsável por comunicar com o \textit{broker} MQTT e trocar as mensagens com o hardware por meio do tópico escolhido, já a segunda parte é responsável pela interação do usuário com o sistema a partir da escolha da funcionalidade.
-
-Respeitando o fluxograma representado pela figura, \ref{fig:firmware_mensagem_app_placa}, a comunicação por meio do protocolo MQTT foi desenvolvida, validando o funcionamento da comunicação com o \textit{hardware}.
+Para esta aplicação, primeiramente foi desenvolvida a comunicação com o \textit{broker} MQTT e a troca de mensagens com o \textit{hardware} por meio do tópico escolhido, respeitando o fluxograma representado pela figura, \ref{fig:firmware_mensagem_app_placa}. Em seguida, desenvolveu-se a interação do usuário com o sistema a partir da escolha da funcionalidade.
 
 \begin{figure}[H]
 	\centering
@@ -207,9 +195,40 @@ Respeitando o fluxograma representado pela figura, \ref{fig:firmware_mensagem_ap
 	\label{fig:firmware_mensagem_app_placa}
 \end{figure}
 
-A partir disso, as funcionalidades citadas anteriormente foram desenvolvidas seguindo os tipos de mensagens previamente retratados na tabela \ref{table:mqtt_mensagens}, finalizando-se assim a primeira parte do aplicativo \textit{mobile}.
+A partir disso, as funcionalidades citadas anteriormente foram desenvolvidas seguindo os tipos de mensagens previamente retratados na tabela \ref{table:mqtt_mensagens}, finalizando-se assim a elaboração do \textit{backend} do aplicativo \textit{mobile}, no qual é totalmente representado pelas imagens \ref{fig:app_inventor_on_off}, \ref{fig:app_inventor_energia}, \ref{fig:app_inventor_temporizador}, \ref{fig:app_inventor_sensor_presenca} e \ref{fig:app_inventor_resposta} referentes aos diagramas de lógicas na plataforma App Inventor.
 
-Para a segunda parte, foi inicialmente analisada a interatividade com o aplicativo a nível de usuário com botões sem ícones. Foi percebido então que a falta de ilustração das funcionalidades nos botões tornava o aplicativo não intuitivo, portanto foram escolhidos os ícones, retratados na figura \ref{fig:icones_app}, que mais se aproximassem na retratividade das funcionalidades descritas, além disso, para mostrar ao usuário o retorno das requisições realizadas foi utilizada uma caixa de texto.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.65\columnwidth]{figuras/app_inventor/app_inventor_on_off}
+	\caption{Bloco de funcionalidade do App Inventor para a função liga/desliga.}
+	\label{fig:app_inventor_on_off}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.65\columnwidth]{figuras/app_inventor/app_inventor_energia}
+	\caption{Bloco de funcionalidade do App Inventor para obter informações do consumo de energia elétrica.}
+	\label{fig:app_inventor_energia}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.55\columnwidth]{figuras/app_inventor/app_inventor_temporizador}
+	\caption{Bloco de funcionalidade do App Inventor para os temporizadores de liga/desliga.}
+	\label{fig:app_inventor_temporizador}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.55\columnwidth]{figuras/app_inventor/app_inventor_sensor_presenca}
+	\caption{Bloco de funcionalidade do App Inventor verificação da presença humana.}
+	\label{fig:app_inventor_sensor_presenca}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\columnwidth]{figuras/app_inventor/app_inventor_resposta}
+	\caption{Bloco de funcionalidade do App Inventor obtenção da resposta do \textit{firmware} às requisições.}
+	\label{fig:app_inventor_resposta}
+\end{figure}
+
+Para o \textit{frontend}, foi inicialmente analisada a interatividade com o aplicativo a nível de usuário com botões sem ícones. Observou-se então que a falta de ilustração das funcionalidades nos botões tornava o aplicativo não intuitivo, portanto foram escolhidos os ícones, retratados na figura \ref{fig:icones_app}, que mais se aproximassem na retratividade das funcionalidades descritas, além disso, para mostrar ao usuário o retorno das requisições realizadas foi utilizada uma caixa de texto.
 
 \begin{figure}[H]
 	\begin{subfigure}{1\textwidth}

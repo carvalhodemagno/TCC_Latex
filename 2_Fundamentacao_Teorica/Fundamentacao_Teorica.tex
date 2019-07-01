@@ -6,11 +6,30 @@ Este capítulo apresenta os fundamentos teóricos utilizados para o desenvolviment
 
 \section{Internet das Coisas e o Protocolo MQTT}
 \label{sec:iot_mqtt}
-O termo Internet das Coisas (IoT) surgiu quando um grupo do \textit{Massachusetts Institute of Technology} (MIT) trabalhava no campo de identificação, localização e reconhecimento de estado de objetos usando sensores sem fio e tecnologia de identificação por radiofrequência \cite{rise_of_iot}.
- 
-A IoT é um serviço da Internet que permite dispositivos físicos a comunicarem entre si ou com pessoas, através da rede mundial de computadores, possibilitando assim adquirir e monitorar informações. 
+O termo Internet das Coisas (do inglês Internet of Things - IoT) foi utilizado a primeira vez em 1999 por Kevin Ashton durante uma apresentação para executivos da Procter \& Gamble (P\&G), para se referir a implementação de tecnologia RFID (Radio-Frequency IDentification) na cadeia de suprimentos da P\&G com o objetivo de informatizar o sistema de estoque e torná-lo mais preciso, minimizando a atuação humana tão suscetível a falhas \cite{kevin_ashton}. Apesar de, no primeiro momento, o termo utilizado referir-se a aplicação de uma tecnologia específica, o conceito de IoT se ampliou com o passar dos anos a partir dos avanços tecnológicos que tornaram a sua aplicabilidade viável e cada vez mais frequente \cite{santos_etal}.
 
-Com o trabalho colaborativo de vários sistema, a IoT torna ambientes mais inteligentes, permitindo repostas automáticas - ou seja, sem interferência humana - a dados adquiridos do ambiente, como monitoramento de cheias, informações sobre terremotos, dados sobre o tráfego, entre outros \cite{iot_footbal, iot_open_data}. 
+Atualmente, a definição de IoT pode receber abordagens variadas, a depender da ótica sob a qual está sendo relatada. Como definido por Atzori et al em seu artigo de 2010, a IoT pode ser apresentada sob três perspectivas: 1) visão orientada às coisas: com enfoque para os objetos; 2) visão orientada à Internet: com foco para a comunicação e as redes; 3) visão orientada a semântica: trata da interpretação dos dados gerados \cite{atzori}. 
+
+De forma geral, a IoT pode ser definida como uma extensão da Internet, que permite dispositivos físicos estabelecerem comunicação entre si ou com pessoas, através da rede mundial de computadores, possibilitando ao usuário adquirir e monitorar informações, além de permitir a conexão independente entre objetos inteligentes \cite{santos_etal}.
+
+A aplicação da tecnologia Iot se estende aos mais diversos setores, podendo ser direcionada para interesses individuais, como no uso residencial para economia de energia, por exemplo, ou para interesses da sociedade em ocorrências de maior impacto como monitoramento de cheias, informações sobre terremotos, dados sobre o tráfego, monitoramento de pacientes internados, entre outros \cite{gubbi}. Dessa forma, a evolução da IoT constitui uma importante ferramenta no desenvolvimento de cidades inteligentes a partir do trabalho colaborativo entre diferentes sistemas em resposta às situações de forma automática \cite{iot_open_data}.
+
+O progresso da IoT é de interesse tanto da indústria, como da academia, onde há uma elevada expectativa sobre o uso desta tecnologia, sendo considerada a maior aposta para se apresentar como a nova revolução da tecnologia da informação \cite{kevin_ashton}. Isto se dá em razão do seu potencial de uso nas mais diversas áreas das atividades humanas a fim de trazer avanços na automação residencial e industrial \cite{santos_etal}.
+
+Em relação a estrutura, a IoT abrange a infraestrutura geral de funcionamento, incluindo software, hardware e serviços, que é usada para sustentar essas redes de informações. Para realizar a identificação dispositivos, é possível usar tecnologias de identificação como, por exemplo, RFID, que permitem que cada dispositivo seja identificado de forma única \cite{gubbi}. 
+
+A IoT apresenta sua arquitetura que pode ser didaticamente dividida em camadas projetadas para responder às demandas de diferentes indústrias, empresas e sociedade. As camadas da arquitetura são e suas funcionalidades são \cite{zarghami}:
+
+\begin{itemize}
+	\setlength\itemsep{0em}
+	\item Camada de Borda: camada de hardware que consiste em sistemas embarcados, etiquetas RFID, redes de sensores e todos os outros sensores em diferentes formas. Essa camada de hardware pode executar várias funções, como coleta de informações de um sistema ou ambiente, processamento de informações e apoio à comunicação.
+	\item Camada de Acesso: direcionada ao manuseio de dados e é responsável por publicar e assinar os serviços fornecidos pelo objeto, pelo roteamento de mensagens e pela comunicação entre as plataformas.
+	\item Camada de Internet: responsável por prover a comunicação e acesso à rede mundial de computadores.
+	Camada de \textit{middleware}: atua como intermediária entre as camadas de Internet e de Aplicação, sendo capaz de agregar e filtrar os dados recebidos dos dispositivos de hardware, realizando a descoberta de informações e fornecendo controle de acesso aos dispositivos para aplicativos.
+	\item Camada de aplicação: tem por objetivo processar os dados coletados na camada de hardware prover serviços específicos aos usuários. 
+\end{itemize}
+
+Entendendo que o funcionamento da IoT baseia-se no compartilhamento de dados via Internet e que para integrar vários dispositivos em uma rede é necessário uma padronização de comunicação, o Protocolo MQTT (Message Queue Telemetry Transport) apresenta-se como uma opção de protocolo de comunicação de nível de aplicação seguro e viável \cite{iot_open_data}.
 
 \begin{figure}[H]
 	\centering
@@ -19,6 +38,10 @@ Com o trabalho colaborativo de vários sistema, a IoT torna ambientes mais inteli
 	\label{fig:mqtt_architecture}
 \end{figure}
 
+o Protocolo  MQTT é um protocolo de comunicação baseado na estratégia de publisher/subscriber, é leve, possui pouca largura de banda, permite vários clientes conectados simultaneamente a um único servidor e garante que a mensagem seja enviada, além de possuir a licença livre de royalties o que o torna ideal para aplicações de IoT. O MQTT é o Protocolo mais popular entre os protocolos de comunicação devido ao seu peso e a sua capacidade de compartilhar muitos dados em tempo real. (MQTT, 2017)
+
+O MQTT foi desenvolvido para ser usado sobre o protocolo TCP/IP (Transmition Control Protocol e Internet Protocol) e situa-se na camada de aplicação deste Protocolo que é responsável por fazer a comunicação entre os programas invocados pelos usuários e os protocolos de transporte. (Yuan, 2018)
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\columnwidth]{figuras/mqtt_osi}
@@ -26,9 +49,23 @@ Com o trabalho colaborativo de vários sistema, a IoT torna ambientes mais inteli
 	\label{fig:mqtt_osi}
 \end{figure}
 
+A arquitetura do MQTT envolve três componentes principais: o Publisher e o Subscriber - que podem ser denominados como Clients - e o Broker. O Publisher é o dispositivo inteligente responsável por se conectar ao servidor para enviar informações, enquanto o Subscriber é responsável por escolher as informações que serão recebidas. É denominado de Broker o servidor que faz a intermediação entre Publisher e Subscriber, ao receber e organizar as mensagens enviadas pelo Publisher e enviá-las ao Subscriber \cite{iot_open_data}.
+
+O protocolo MQTT é orientado por mensagens em que cada mensagem é um pedaço discreto de dados. Toda mensagem é publicada em um endereço conhecido como tópico. Os Clients podem se inscrever em vários tópicos e todo cliente inscrito em um tópico recebe todas as mensagens publicadas em tal tópico. Como, por exemplo, em uma rede simples com três Clients e um Broker, todos os três Clients abrem conexões TCP com o Broker.
+
+
 
 \section{Dispositivos de Acionamento Elétrico}
 \label{sec:dispositivos_acionamento_eletrico}
+
+Os dispositivos de acionamentos elétricos são componentes usados em sistemas automatizados que recebem comandos de circuitos elétricos, acionando as cargas, ou seja, permitindo ou não a passagem de corrente elétrica entre um ou mais pontos dos circuitos a serem controlados. Dentre os dispositivos de comando disponíveis, aqueles responsáveis por realizar a função de comutação, ou seja, responsáveis por estabelecer, interromper e, no caso de variação de velocidade, regular o valor de corrente absorvida por uma carga podem ser representados pelos relés e pelas contatoras, que são  componentes eletromecânicos responsáveis por impedir ou permitir a passagem de corrente elétrica entre a fonte e a carga através de manobras (ligar e desligar), e destinam-se a ligar e desligar a carga de forma segura, ou seja, sem que haja o contato do operador no circuito de potência, onde circula a maior corrente. Apesar de os relés eletromagnéticos e contatoras apresentarem funções semelhantes,  eles se diferem por características próprias em comportamento e aplicação \cite{apostila_acionamentos}.
+
+\subsection{Relés}
+O relé é um dispositivo elétrico responsável por produzir modificações súbitas e predeterminadas em um ou mais circuitos elétricos de saída, quando alcançadas determinadas condições no circuito de entrada, que controla o dispositivo. Assim, o relé não possui a função de interromper o circuito principal, mas sim atuar como um sistema de manobra \cite{radiografia}. 
+
+Os relés são compostos, de modo geral, por um eletroímã, em forma de bobina; uma armadura metálica, que possa ser atraída pelo campo magnético criado pelo eletroímã; uma mola e um conjunto de contatos elétricos, que serão abertos, fechados ou comutados, conforme a configuração de cada relé. A corrente elétrica, ao percorrer a bobina, dá origem a um campo magnético que atrai a armadura e provoca a alteração da posição dos contatos, gerando a abertura, fechamento ou comutação, a depender de posição e do tipo de relé, fazendo o dispositivo atuar. 
+
+Os relés são os elementos fundamentais de manobra de cargas elétricas, pois permitem a combinação de lógicas no comando, bem como a separação dos circuitos de potência e comando. A figura \ref{fig:acionamentos_rele} representa um relé em seu modo mais simples, composto de uma carcaça com cinco terminais. Os terminais (1) e (2) representam a bobina de excitação, o terminal (3) representa o terminal de entrada, e os terminais (4) e (5) correspondem aos contatos normalmente fechado (NF) e normalmente aberto (NA), respectivamente. Uma característica importante dos relés é que não há contato físico entre os terminais de acionamento e os de trabalho, o que permite o surgimento de dois circuitos simultâneos em um painel elétrico, sendo:
 
 \begin{figure}[H]
 	\centering
@@ -37,6 +74,16 @@ Com o trabalho colaborativo de vários sistema, a IoT torna ambientes mais inteli
 	\label{fig:acionamentos_rele}
 \end{figure}
 
+i. Circuito de comando: onde encontra-se a interface com o operador da máquina ou dispositivo e portanto trabalha com baixas correntes (até 10 A) e/ou baixas tensões.
+ii. Circuito de Potência: onde se encontram as cargas a serem acionadas, tais como motores, resistências de aquecimento, entre outras. Neste podem circular correntes elétricas da ordem de 10 A ou mais, e atingir tensões de até 760 V.
+
+
+\subsection{Contatoras}
+
+As contatoras, elementos principais de comandos eletromecânicos, são dispositivos de manobra mecânica, que permitem o controle de elevadas correntes por meio de um circuito de baixa corrente, construídos para uma elevada freqüência de operação.
+
+Uma contatora consiste basicamente de um núcleo magnético bipartido, em que há uma parte móvel e a outra fixa e uma bobina. Quando a bobina eletromagnética é energizada, forma-se um campo magnético que se concentra na parte fixa do dispositivo e atrai o núcleo móvel, onde estão localizados os contatos móveis, que, por consequência, também são deslocados. Quando não há corrente circulando pela bobina de excitação, a parte fixa do núcleo é repelida por ação de molas. Contatos elétricos são distribuídos solidariamente a parte móvel do núcleo, constituindo um conjunto de contatos móveis. Mutuamente a carcaça da contatora existe um conjunto de contatos fixos. Cada jogo de contatos fixos e móveis podem ser do tipo Normalmente aberto (NA), ou normalmente fechados (NF).
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\columnwidth]{figuras/acionamentos_contatora}
@@ -44,19 +91,31 @@ Com o trabalho colaborativo de vários sistema, a IoT torna ambientes mais inteli
 	\label{fig:acionamentos_contatora}
 \end{figure}
 
-\section{Medição de Energia Elétrica e os PMICs}
+Compostos por contatos móveis, as contatoras eletromecânicas podem ser divididas em dois tipos principais: os contatoras auxiliares e os de potência, classificação relacionada à disposição de seus contatos no dispositivo. De modo geral, o primeiro é utilizado para ligar e desligar circuitos de comando, sinalização, controle, interface com processadores eletrônicos, entre outros, enquanto o de potência é usado como chave de ligação e desligamento de motores e outras cargas elétricas.
+
+A utilização de contatoras em circuitos elétricos apresenta como principais vantagens a capacidade de comando à distância, o elevado número de manobras e a extensa vida útil mecânica. 
+
+
+\section{Medição de Energia Elétrica}
 \label{sec:medicao_energia_eletrica}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\columnwidth]{figuras/medicao_metodo}
-	\caption{Definição dos termos invasivo e intrusivo \cite{medicao_ipt}.}
-	\label{fig:medicao_metodo}
-\end{figure}
+
+Um sistema de medição de energia é composto principalmente por 4 blocos funcionais, conforme é representado na figura \ref{fig:medidor_energia}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\columnwidth]{figuras/medicao_pmic_architecture}
-	\caption{Arquitetura interna básica de um PMIC \cite{MCP39F521_Datasheet}.}
-	\label{fig:medicao_pmic_architecture}
+	\includegraphics[width=0.85\columnwidth]{figuras/medidor_energia}
+	\caption{Blocos funcionais de um medidor de energia.}
+	\label{fig:medidor_energia}
 \end{figure}
+
+O Bloco Sensor é responsável por realizar as medições de forma analógica das grandezas de tensão e corrente da rede elétrica, normalmente através de divisores de tensão e por resistor \textit{shunt} - um resistor de baixíssima resistência - ou por um transformador de corrente, que induz uma tensão a partir da corrente que passa por ele \cite{video_analog_devices}.
+ 
+O Bloco de Aquisição de Sinais é encarregado de realizara a conversão das grandezas de formato analógico para formato digital. Essa conversão normalmente é feita a partir de conversores analógicos/digitais chamados de Delta-Sigma, de alta precisão, por volta de 24 bits.
+
+O Mecanismo de cálculo computa os outros parâmetros da rede elétrica, baseando-se nos valores de tensão e corrente elétrica obtidos no Bloco Sensor, dessa forma consegue obter os valores de frequência, potência e fator de potência. Com isso, esses valores são ajustados para facilitar a interpretação. 
+
+O Mecanismo de Armazenamento é incumbido de armazenar os dados fornecidos pelo Mecanismo de cálculo em registrados para fácil acesso. Estes registradores podem ser acessados de forma totalmente isolada por microcontroladores externos. Essa comunicação é feita comumente por 2 protocolos principais I2C e SPI.
+
+Conforme retratado pelo Bloco Sensor, existem duas formas de medir a corrente: Resistor de tipo \textit{shunt} ou transformador de corrente. O primeiro é  mais barato e apresenta uma linearidade maior em relação ao range de medição, porém, quando o quesito é medição em altas correntes, o segunda leva vantagem, uma vez que a medição é do tipo indireta, ou seja, é mais seguro. 
+ 

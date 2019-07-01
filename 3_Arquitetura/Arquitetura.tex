@@ -1,88 +1,92 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Descrição do Sistema}
+\chapter{Metodologia}
 \label{chapter:arquitetura_requisitos}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 A proposta deste trabalho é desenvolver e implementar um sistema de monitoramento e controle remoto para condicionadores de ar baseado em IoT. Para ter uma visão geral sobre o sistema, a figura \ref{fig:Architecture_Block_Diagram} ilustra a arquitetura como um todo. 
 
-Sendo baseado nos conceitos de IoT, o sistema incorpora um dispositivo responsável por controlar e monitorar o alvo (condicionador de ar), chamado aqui de \textit{hardware}, a partir de certa inteligência incorporada, chamada aqui de \textit{firmware}. O usuário, a partir de um aplicativo \textit{mobile}, chamado aqui de \textit{software}, solicita e visualiza as informações relacionadas ao sistema a partir de requisições ao \textit{hardware}. As possíveis requisições são: obter consumo de energia elétrica, verificar presença humana no ambiente no qual o sistema está instalado e ligar ou desligar o condicionador de ar, além de poder realizar a escolha do horário para ligar e desligar previamente.  
+Por ser baseado nos conceitos de IoT, o sistema incorpora um dispositivo, chamado aqui de \textit{hardware}, responsável por controlar e monitorar o condicionador de ar por meio de certa inteligência incorporada, chamada aqui de \textit{firmware}. O usuário, a partir de um aplicativo \textit{mobile}, solicita e visualiza as informações relacionadas ao sistema, realizando requisições ao \textit{firmware} embarcado no \textit{hardware}.
 
-A comunicação entre o \textit{hardware} e o \textit{software} é por meio do protocolo MQTT, sendo gerenciada pelo \textit{broker}.
+As possíveis requisições são: obter consumo de energia elétrica, verificar presença humana no ambiente no qual o sistema está instalado e ligar ou desligar o condicionador de ar, além de poder realizar a escolha do horário para ligar e desligar previamente.  
+
+A comunicação entre o \textit{firmware} e o aplicativo é por meio do protocolo MQTT, sendo gerenciada pelo \textit{broker}. Resumidamente, o cliente MQTT contido no aplicativo \textit{mobile} faz requisições por meio de mensagens que são enviadas ao cliente MQTT contido no \textit{firmware} que, por sua vez, retorna ao aplicativo as informações solicitadas na requisição.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\columnwidth]{figuras/Architecture_Block_Diagram}
+	\includegraphics[width=0.7\columnwidth]{figuras/Architecture_Block_Diagram}
 	\caption{Arquitetura implementada.}
 	\label{fig:Architecture_Block_Diagram}
 \end{figure}
 
+Para cumprir com as funcionalidades do projeto, conforme retratado, faz-se necessário que haja o desenvolvimento de 3 partes: um \textit{hardware}, um \textit{firmare} e um aplicativo \textit{mobile}. 
 
-\section{Materiais e métodos}
-\label{sec:metodos}
+O \textit{Hardware} é responsável pela parte física, ou seja, é constituído pelos componentes eletrônicos e as ligações entre eles, usados para garantir a funcionalidade do sistema. Para que haja o funcionamento destes circuitos eletrônicos, é preciso que ocorra o desenvolvimento de um esquemático elétrico e de um desenho da placa de circuito impresso (PCB), também conhecido como \textit{layout}, que foram desenvolvidos na plataforma Altium, versão 19.0.10.
 
-Para cumprir com os requisitos do projeto, o \textit{hardware} foi dividido em 3 circuitos eletrônicos principais, sendo eles: \textbf{Circuito de Conexão com \textit{Wi-Fi}}, \textbf{Circuito de Ativação do Condicionador de Ar} e \textbf{Circuito de Medição e Sensoriamento}. 
+Já o \textit{Firmware} é responsável pela inteligência agregada ao \textit{hardware}. Com o objetivo de gerenciar e controlar periféricos, como botões, chaves, diodos de emissão de luz (LEDs) e etc, o \textit{firmware} é embarcado em um componente eletrônico, chamado microcontrolador, sendo desenvolvido na plataforma Arduino, versão 1.8.7. 
 
-O Circuito de Conexão com \textit{Wi-Fi} é  responsável por trocar informações com o aplicativo mobile, utilizando o protocolo MQTT.
+Por fim, o Aplicativo \textit{mobile} é incumbido de interagir com o usuário a partir de botões, caixas de texto, menus e etc, e também de inter-relacionar-se com o \textit{Firmware}, executando as requisições do usuário final. O aplicativo \textit{mobile} foi desenvolvido utilizando a plataforma App Inventor, versão 2, e o editor Notepad++, versão 7.6.
 
-O Circuito de Ativação do Condicionador de Ar é responsável controlar alimentação elétrica entregue ao dispositivo.
 
-E o Circuito de Sensoriamento é responsável por realizar as medições provenientes da rede elétrica - como tensão, corrente, fator de potência, potência ativa e frequência - com intuito de definir se os níveis estão adequados para o perfeito funcionamento do condicionador de ar e verificar a presença ou ausência humana onde o equipamento está instalado.
+\section{Métodos de Hardware}
+\label{subsec:metodos_hardware}
+Para realizar as funcionalidades levantadas, o \textit{Hardware} foi dividido em 3 circuitos eletrônicos principais, sendo eles: \textbf{Circuito do microcontrolador e de conexão com \textit{Wi-Fi}}, \textbf{Circuito de alimentação e de ativação do Condicionador de Ar} e \textbf{Circuito de Medição de energia elétrica e sensoriamento}. 
 
-Para que haja o funcionamento destes circuitos eletrônicos, é preciso que ocorra o desenvolvimento de um esquemático elétrico e de um desenho da placa de circuito impresso (PCB), também conhecido como \textit{layout}. 
+O Circuito do microcontrolador e de conexão com \textit{Wi-Fi} é responsável por permitir que o \textit{Hardware} gerencie os periféricos e comunique por meio do protocolo MQTT quando conectado em um roteador com acesso à internet.
+
+O Circuito de alimentação e de ativação do Condicionador de Ar é incumbido de adequar a energia elétrica da rede para alimentar corretamente os periféricos do \textit{Hardware} e controlar a alimentação elétrica entregue à carga, ou seja, permitir ou não o fluxo de energia.
+
+E o Circuito de Medição de energia elétrica e sensoriamento é responsável por realizar as medições provenientes da rede elétrica - como tensão, corrente, potência ativa e frequência - com intuito de definir se os níveis estão adequados para o perfeito funcionamento do condicionador de ar e verificar a presença ou ausência humana onde o equipamento está instalado.
+
+ 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Componentes utilizados} 
-Para realizar a escolha dos componentes foi levado em conta principalmente o custo, visando tornar o produto atrativo ao usuário final, ou seja, o consumidor.
 
-Para suprir as funcionalidades do \textbf{Circuito de Conexão com \textit{Wi-Fi}}, o componente principal escolhido foi o módulo ESP12-F, representado na figura \ref{fig:ESP12-F}, que contém um microcontrolador juntamente com o circuito de radio-frequência (RF) para o \textit{Wi-Fi} e um LED indicativo. O microcontrolador contido no módulo é o ESP8266EX, representado na figura \ref{fig:ESP8266EX}, e suas principais características são\cite{ESP8266EX_DATASHEET}:
+Com base nos circuitos previamente citados, é necessário definir quais são os componentes eletrônicos disponíveis no mercado que possibilitem a implementação, adotando como critérios a disponibilidade e baixo custo, visando tornar o produto atrativo ao usuário final.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.4\columnwidth]{figuras/ESP12-F}
-	\caption{Módulo ESP12-F\cite{AiThinker}.}
-	\label{fig:ESP12-F}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.4\columnwidth]{figuras/ESP8266EX}
-	\caption{Microcontrolador ESP8266EX \cite{ESP8266_MICRO}.}
-	\label{fig:ESP8266EX}
-\end{figure}
+Para suprir as funcionalidades do \textbf{Circuito do microcontrolador e de conexão com \textit{Wi-Fi}}, o componente principal escolhido foi o módulo ESP12-F, representado na figura \ref{fig:ESP12-F}, que contém um microcontrolador juntamente com o circuito de radio-frequência (RF) para o \textit{Wi-Fi} e um LED indicativo. O microcontrolador contido no módulo é o ESP8266EX, representado na figura \ref{fig:ESP8266EX}, e suas principais características são\cite{ESP8266EX_DATASHEET}:
 
 \begin{itemize}
+	\setlength\itemsep{0em}
 	\item Microprocessador de 32 bits;
 	\item \textit{Wi-Fi} integrado sob o protocolo 802.11 b/g/n, na frequência de 2.4GHz;
 	\item Interface periféricas: UART, SDIO, SPI, I2C, I2S, GPIO, ADC e PWM;
 	\item Tensão de operação: 2,5V a 3,6V;
 	\item Corrente de operação: em média 80mA;
 	\item Tamanho: 5 mm x 5 mm;
-	\item 32 pinos;
 	\item Interface de gravação tanto por UART, quanto por \textit{over-the-air} (OTA);
 	\item Até 4 perfis de baixo consumo de energia.
 \end{itemize}
 
-Foram adicionados 2 (dois) \textit{light-emitting diodes} (LEDs) do tipo \textit{suface mounting device} (SMD), representado na figura \ref{fig:LED_SMD}, a este circuito também, um para indicar comunicação com o celular pelo protocolo MQTT e um para indicar se a alimentação elétrica da PCB está nos níveis corretos, assim como 2 (dois) botões do tipo \textit{push-buttom}, representado na figura \ref{fig:Push_Button}, para realizar a gravação do \textit{firmware} no microcontrolador.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\columnwidth]{figuras/ESP12-F}
+	\caption{Módulo ESP12-F\cite{AiThinker}.}
+	\label{fig:ESP12-F}
+\end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.3\columnwidth]{figuras/LED_SMD}
+	\includegraphics[width=0.3\columnwidth]{figuras/ESP8266EX}
+	\caption{Microcontrolador ESP8266EX \cite{ESP8266_MICRO}.}
+	\label{fig:ESP8266EX}
+\end{figure}
+
+Foram adicionados 2 (dois) \textit{light-emitting diodes} (LEDs) do tipo \textit{suface mounting device} (SMD), representado na figura \ref{fig:LED_SMD}, a este circuito também, um para indicar comunicação pelo protocolo MQTT e um para indicar se a alimentação elétrica de todos os circuitos está nos níveis corretos.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.2\columnwidth]{figuras/LED_SMD}
 	\caption{LED SMD \cite{LED_SMD}.}
 	\label{fig:LED_SMD}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.3\columnwidth]{figuras/Push_Button}
-	\caption{Botão do tipo \textit{push} \cite{Push_Button}.}
-	\label{fig:Push_Button}
-\end{figure}
-
-Para o \textbf{Circuito de Ativação do Condicionador de Ar}, o principal componente escolhido foi o relé SRD-05VDC-SL-C, representado na figura \ref{fig:srd-05vdc-sl-c}, quais características principais são:
+Para o \textbf{Circuito de alimentação e de ativação do Condicionador de Ar}, o principal componente escolhido foi o relé SRD-05VDC-SL-C, representado na figura \ref{fig:srd-05vdc-sl-c}, quais características principais são:
 
 \begin{itemize}
+	\setlength\itemsep{0em}
 	\item Tensão de ativação do enrolamento: 5 V;
 	\item Corrente nominal do enrolamento: 89,3 mA;
 	\item Resistência do enrolamento: 55 $ \Omega $;
@@ -98,7 +102,7 @@ Para o \textbf{Circuito de Ativação do Condicionador de Ar}, o principal compone
 	\label{fig:srd-05vdc-sl-c}
 \end{figure}
 
-O relé SRD-05VDC-SL-C foi utilizado para ativar uma contatora que, por sua vez, alimenta o condicionador de ar. Como o objetivo foi de ativar qualquer tipo de condicionador de ar, utilizou-se contatoras, representadas na imagem \ref{fig:contatora}, que aceitassem tanto 110 VAC quanto 220 VAC no enrolamento de alimentação.
+O relé SRD-05VDC-SL-C foi utilizado para ativar uma contatora que, por sua vez, alimenta o condicionador de ar. Como o objetivo foi de ativar tanto condicionadores de ar monofásicos quanto bifásicos, foram levantadas 2 (duas) contatoras, uma que aceitasse 110 VAC e outra que aceitasse 220 VAC no enrolamento de alimentação, conforme representado na imagem \ref{fig:contatora}.
 
 \begin{figure}[H]
 	\centering
@@ -107,27 +111,56 @@ O relé SRD-05VDC-SL-C foi utilizado para ativar uma contatora que, por sua vez, 
 	\label{fig:contatora}
 \end{figure}
 
-Para o \textbf{Circuito de Sensoriamento}, o componente escolhido para fazer as medições de tensão, corrente, fator de potência e frequência da rede de energia elétrica, informações essas suficientes para definir se ela está adequada para alimentar o condicionador de ar, foi MCP39F521, representado na figura \ref{fig:MCP39F521}. O MCP39F521 é um dispositivo de monitoramento de energia monofásico completo e altamente integrado, projetado para medição em tempo real de energia de entrada para fontes de alimentação de corrente alternada e de corrente contínua, unidades de distribuição de energia, consumidor e aplicações industriais. Inclui ADCs delta-sigma de canal duplo, um mecanismo de cálculo de 16 bits, EEPROM e uma interface I2C de dois fios flexível. Uma referência integrada de tensão de baixa derivação com 10 ppm/°C além de 94,5 dB de desempenho de sinal-ruído e taxa de distorção (SINAD) em cada canal de medição permite melhor que 0,1 $ \% $ de projetos precisos em uma faixa dinâmica de 4000:1\cite{MCP39F521_Datasheet}. Foi adicionado também um sensor de temperatura analógico, por questões de segurança (superaquecimento), para monitorar a temperatura da PCB, MCP9700 que é representado pela figura \ref{fig:MCP9700}.
+Para o \textbf{Circuito de Medição de energia elétrica e sensoriamento}, o componente escolhido para fazer as medições de tensão, corrente, potência ativa e frequência da rede de energia elétrica foi MCP39F521, representado na figura \ref{fig:MCP39F521}. O MCP39F521 é um dispositivo de monitoramento de energia monofásico completo e altamente integrado, projetado para medição em tempo real de energia de entrada para fontes de alimentação de corrente alternada e de corrente contínua, unidades de distribuição de energia, consumidor e aplicações industriais. Inclui ADCs delta-sigma de canal duplo, um mecanismo de cálculo de 16 bits, EEPROM e uma interface I2C de dois fios flexível. Uma referência integrada de tensão de baixa derivação com 10 ppm/°C além de 94,5 dB de desempenho de sinal-ruído e taxa de distorção (SINAD) em cada canal de medição permite melhor que 0,1 $ \% $ de projetos precisos em uma faixa dinâmica de 4000:1\cite{MCP39F521_Datasheet}. 
+
+Foi adicionado também o CI MCP9700, um sensor de temperatura analógico, representado pela figura \ref{fig:MCP9700}, para verificar a ocorrência de superaquecimento, evitando possíveis causas de incêndio.
 
 Para realizar as medições de presença humana o componente utilizado foi o sensor EKMC1601111, ilustrado pela figura \ref{fig:EKMC1601111}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.3\columnwidth]{figuras/MCP39F521}
+	\includegraphics[width=0.2\columnwidth]{figuras/MCP39F521}
 	\caption{Circuito Integrado (CI) MCP39F521 \cite{MCP39F521}.}
 	\label{fig:MCP39F521}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.3\columnwidth]{figuras/MCP9700}
+	\includegraphics[width=0.2\columnwidth]{figuras/MCP9700}
 	\caption{Circuito Integrado MCP9700 \cite{MCP9700}.}
 	\label{fig:MCP9700}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.3\columnwidth]{figuras/EKMC1601111}
+	\includegraphics[width=0.2\columnwidth]{figuras/EKMC1601111}
 	\caption{Sensor de presença EKMC1601111 \cite{EKMC1601111}.}
 	\label{fig:EKMC1601111}
 \end{figure}
+
+
+\section{Métodos de \textit{Firmware}}
+\label{subsec:metodos_firmware}
+A partir do levantamento de funcionalidades foi possível sedimentar o desenvolvimento do \textit{firmware} em três partes principais: \textbf{Comunicação sob o protocolo MQTT por meio da interface Wi-Fi}, \textbf{\textit{Driver} de controle dos periféricos} e \textbf{Monitoramento dos sensores}.
+
+Para que as requisições provenientes do aplicativo \textit{mobile} tenham efeito sobre o \textit{hardware}, o \textit{firmware} precisa comunicar-se a partir do protocolo MQTT e, para isso, precisa gerenciar a comunicação com a rede Wi-Fi e garantir conexão com a internet.
+
+Para que ocorra o acionamento do condicionador de ar, leitura dos valores de energia elétrica e verificação da presença humana, o \textit{firmware} deve ser capaz de enviar, receber e interpretar informações dos componentes de \textit{hardware}, para isso é implementada uma camada, chamada de \textit{Driver}, responsável por fazer esse intermédio entre o microcontrolador e estes periféricos.
+
+Com objetivo de tornar o condicionador de ar mais protegido contra uma rede elétrica de má qualidade, faz-se necessário que haja o monitoramento dos parâmetros desta rede elétrica, pelo qual o \textit{firmware} é responsável, além de possibilitar economia de energia, através do monitoramento do sensor de presença.
+
+O desenvolvimento inicial do \textit{firmware}, foi executado utilizando o módulo NodeMCU Lol1n, mostrado na figura \ref{fig:nodemcu_lol1n}, que contém um módulo ESP-12E e os circuitos de alimentação e gravação por interface USB já embutidos nele. Adotou-se esta metodologia, de utilizar um módulo com os circuitos prontos para uso, com intuito de diminuir o tempo de desenvolvimento.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.35\columnwidth]{figuras/nodemcu_lol1n}
+	\caption{Módulo NodeMCU Lol1n \cite{nodemcu_lolin}.}
+	\label{fig:nodemcu_lol1n}
+\end{figure}
+
+\section{Métodos do aplicativo \textit{mobile}}
+Por fim, o aplicativo \textit{mobile} foi desenvolvido em 2 (duas) frentes, primeiramente a parte que o usuário não vê, chamada aqui de \textbf{\textit{backend}}, como comunicação com a internet, as regras de comunicação com o \textit{hardware} implementado e etc, e depois a parte que o usuário vê e interage com, chamada aqui de \textbf{\textit{frontend}}, como os botões, caixas de texto e etc.
+
+O \textit{backend} foi desenvolvido usando a linguagem JavaScript, com o auxílio da ferramenta Notepad++, que é passada a um \textit{smartphone} onde será executado o aplicativo \textit{mobile}. É gerenciada, por esta parte do projeto, a comunicação com a internet, seja por meio da interface Wi-Fi ou por dados móveis, para acesso ao \textit{broker} MQTT.
+
+O \textit{fronted} foi desenvolvido usando a plataforma App Inventor, que é capaz de gerar um pacote a ser instalado no \textit{smartphone}. É gerenciada, por esta parte do projeto, a interação com o usuário e solicitação de comunicação com o \textit{backend} desenvolvido do aplicativo.
