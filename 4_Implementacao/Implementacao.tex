@@ -179,7 +179,7 @@ Baseando-se na descrição do sistema retratada no capítulo \ref{chapter:arquitetu
 
 Em relação ao primeiro, o objetivo é garantir que os parâmetros de energia elétrica entregues ao condicionador de ar estejam suficientes para o perfeito funcionamento dele, considerando uma certa variação de 10\% dos valores de tensão alternada e frequência da rede elétrica, conforme citado no capítulo \ref{chapter:arquitetura_requisitos}. Portanto, para realizar esta proteção contra mal funcionamentos, foi desenvolvida uma rotina responsável por realizar leituras constantes no MCP39F521, desativando assim a alimentação do condicionador ao verificar algum parâmetro fora da variação aceita.
 
-Em relação ao segundo, o objetivo é informar ao usuário caso haja consumo de energia no condicionador de ar na ausência de pessoas no cômodo em que o dispositivo está instalado, possibilitando assim a economia de energia caso o usuário tenha esquecido aquele ligado. Portanto, para realizar esta funcionalidade, foi desenvolvida uma rotina capaz de verificar constantemente a presença humana, realizando leituras no sensor de presença, representando na figura \ref{fig:EKMC1601111}.
+Em relação ao segundo, o objetivo é informar ao usuário caso haja consumo de energia no condicionador de ar na ausência de pessoas no cômodo em que o dispositivo está instalado, possibilitando assim a economia de energia caso o usuário tenha esquecido aquele ligado. Portanto, para realizar esta funcionalidade, foi desenvolvida uma rotina capaz de verificar constantemente a presença humana, de 10 em 10 minutos, realizando leituras no sensor de presença, representando na figura \ref{fig:EKMC1601111}.
 
 
 \section{Aplicativo \textit{mobile}}

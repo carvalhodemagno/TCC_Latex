@@ -3,15 +3,41 @@
 \label{chapter:introducao}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+Internet das coisas (IoT) é o conjunto de tecnologias capaz de interconectar desde objetos da vida cotidiana até dispositivos de rede sofisticados, por meio da rede mundial de computadores (WWW). A IoT pode ser explicada como a estrutura usada para coletar informações de dispositivos sensores, chamados de objetos. Esses objetos da IoT devem ser identificados, gerenciados e controlados, sendo capazes de interagir com humanos ou outros objetos dentro de uma comunicação do tipo Máquina para Máquina (M2M). A IoT aprimora a capacidade de um indivíduo ou o estilo de vida da sociedade, já que pode ser implementada em uma ampla gama de aplicações como saúde, cidades inteligentes, agricultura, edifício automatizados, sistema de tráfego inteligente e mais \cite{sharing_iot, iot_footbal}.
+
+Uma das aplicações da IoT é a automação residencial, também chamada de domótica. A domótica é descrita como um conjunto de tecnologias utilizado para garantir a comodidade, conforto e segurança do usuário ou ocupantes da residência \cite{domotica}. Diferentes tecnologias já difundidas que suportam transferência remota de dados, controle e sensoriamento, como RFID, Wi-Fi, \textit{Bluetooth} foram evoluídas para adicionar inteligência em vários níveis para o meio doméstico \cite{home_iot}.
+
+Por outro lado, para garantir o correto funcionamento dos dispositivos residenciais, que passam agora a serem automatizados, faz-se necessário o correto funcionamento da rede de energia elétrica para suprir o consumo demandado por eles. 
+
+Neste contexto, surgem de 2 (dois) problemas referentes à energia elétrica em dispositivos automatizados: ausência de controle sobre o desperdício de energia e ausência da verificação da qualidade da energia entregue a eles.
+
+Desta forma, este trabalho busca solucionar esta problemática de forma prática, fornecendo ao usuário, de forma remota, o controle e acesso às informações sobre o consumo de condicionadores de ar, um dos dispositivos que mais consomem energia elétrica em uma residência.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Objetivo Geral}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Desenvolver um sistema de monitoramento e controle remoto para condicionadores de ar baseado em Internet das Coisas
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Objetivos Específicos}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\begin{itemize}
+	%\setlength\itemsep{0em}
+	\item Desenvolver um protótipo de \textit{hardware} capaz de acionar cargas, verificar consumo de energia elétrica, e comunicar com a internet;
+	\item Desenvolver algoritmo para verificação das qualidade de energia elétrica entre ao condicionador de ar;
+	\item Desenvolver um aplicativo \textit{mobile} para acesso remoto ao sistema; 
+	\item Comparar o sistema de medição de energia elétrica desenvolvido com um equipamento de medição difundido comercialmente.
+\end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Planejamento do Projeto}
+\section{Organização do trabalho}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A estrutura do trabalho é dividida da seguinte forma:
 
+\begin{itemize}
+	\item No Capítulo 2, é apresentada a teoria necessária para o entendimento dos dispositivos baseados em IoT e um protocolo de comunicação comumente utilizado. Além disso, são descritos os dispositivos usados para acionamento de cargas e como é o processo de medição de energia elétrica, no ponto de vista do medidor;
+	\item No Capítulo 3, é mostrada de forma bem detalhada as etapas que englobam o desenvolvimento do sistema de controle e monitoramento do condicionador de ar, detalhando o projeto da placa de circuito impresso, a programação da inteligência agregada ao sistema e o desenvolvimento de uma interface de interação em forma de aplicativo para \textit{smartphones};
+	\item No Capítulo 4, são apresentados os resultados obtidos através dos testes práticos realizados do sistema completo e avaliação de desempenho do protótipo, em comparação à uma de suas vertentes, a medição de energia;
+	\item No Capítulo 5, são apresentadas as principais conclusões do trabalho desenvolvido, bem
+	como as perspectivas de trabalhos futuros a serem realizados.
+\end{itemize}
