@@ -2,7 +2,9 @@
 \chapter{Resultados}
 \label{chapter:chapter_testes_avaliacao}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Após a confecção da PCB a partir do layout, retratado na seção \ref{section_hardware}, foi possível realizar a montagem dos componentes executando o processo de soldagem manual dos itens contidos na lista de materiais previamente citada na tabela \ref{table:lista_material}. Em seguida, foram realizados testes elétricos e funcionais na placa já montada, representada pela figura \ref{fig:pcb_montada_top}, com o objetivo de validar o projeto de \textit{hardware} desenvolvido, o que resultou na alteração de alguns componentes, como capacitores, visando assim aperfeiçoar o funcionamento da placa.	
+Neste capítulo são apresentados os resultados obtidos a partir da abordagem descrita no capítulo \ref{chapter:desenvolvimento}, levando em conta o processo pós desenvolvimento, os testes com o sistema integrado e a avaliação de desempenho conforme os objetivos específicos. 
+
+Com a confecção da PCB a partir do \textit{layout} e a adquisição dos componentes eletrônicos, conforme a figura \ref{fig:layout_pcb} e a tabela \ref{table:lista_material} respectivamente, foi possível realizar o processo soldagem manual, com intuito de validar o \textit{hardware} desenvolvido. Em seguida, foram executados os testes elétricos e funcionais na placa já montada, representada pela figura \ref{fig:pcb_montada_top}, o que resultou na alteração de alguns componentes, como capacitores, visando assim aperfeiçoar o funcionamento da placa.	
 
 \begin{figure}[H]
 	\centering
@@ -11,7 +13,7 @@ Após a confecção da PCB a partir do layout, retratado na seção \ref{section_hard
 	\label{fig:pcb_montada_top}
 \end{figure}
 
-Em seguida, o \textit{firmware} desenvolvido foi embarcado no processador já soldado na placa, por meio do conector de gravação, "P3"\,na figura \ref{fig:Schematic_Core_Processor}, e um conversor USB/Serial conectado ao computador.
+Em seguida, o \textit{firmware} desenvolvido foi embarcado no processador já soldado na placa, por meio do conector de gravação, "P3"\,da figura \ref{fig:Schematic_Core_Processor}, e um conversor USB/Serial conectado ao computador.
 
 Após o desenvolvimento da camada de comunicação e a camada de interação com o usuário, foi possível também gerar uma APK (\textit{Android Package}) do aplicativo \textit{mobile} desenvolvido e, após instalação por meio de um gerenciador de arquivos no \textit{smartphone}, a tela principal é exibida, sendo representada aqui pela figura \ref{fig:app_resultado}.
 

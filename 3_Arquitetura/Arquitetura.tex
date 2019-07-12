@@ -5,7 +5,7 @@
 
 A proposta deste trabalho é desenvolver e implementar um sistema de monitoramento e controle remoto para condicionadores de ar baseado em IoT. Para ter uma visão geral sobre o sistema, a figura \ref{fig:Architecture_Block_Diagram} ilustra a arquitetura como um todo. 
 
-Por ser baseado nos conceitos de IoT, o sistema incorpora um dispositivo, chamado aqui de \textit{hardware}, responsável por controlar e monitorar o condicionador de ar por meio de certa inteligência incorporada, chamada aqui de \textit{firmware}. O usuário, a partir de um aplicativo \textit{mobile}, solicita e visualiza as informações relacionadas ao sistema, realizando requisições ao \textit{firmware} embarcado no \textit{hardware}.
+Por ser baseado nos conceitos de IoT, o sistema incorpora um dispositivo, chamado aqui de \textit{hardware}, responsável por controlar e monitorar o condicionador de ar por meio de um \textit{software} de baixo nível, chamada aqui de \textit{firmware}. O usuário, a partir de um aplicativo \textit{mobile}, solicita e visualiza as informações relacionadas ao sistema, realizando requisições ao \textit{firmware} embarcado no \textit{hardware}.
 
 As possíveis requisições são: obter consumo de energia elétrica, verificar presença humana no ambiente no qual o sistema está instalado e ligar ou desligar o condicionador de ar, além de poder realizar a escolha do horário para ligar e desligar previamente.  
 
@@ -22,7 +22,7 @@ Para cumprir com as funcionalidades do projeto, conforme retratado, faz-se neces
 
 O \textit{Hardware} é responsável pela parte física, ou seja, é constituído pelos componentes eletrônicos e as ligações entre eles, usados para garantir a funcionalidade do sistema. Para que haja o funcionamento destes circuitos eletrônicos, é preciso que ocorra o desenvolvimento de um esquemático elétrico e de um desenho da placa de circuito impresso (PCB), também conhecido como \textit{layout}, que foram desenvolvidos na plataforma Altium, versão 19.0.10.
 
-Já o \textit{Firmware} é responsável pela inteligência agregada ao \textit{hardware}. Com o objetivo de gerenciar e controlar periféricos, como botões, chaves, diodos de emissão de luz (LEDs) e etc, o \textit{firmware} é embarcado em um componente eletrônico, chamado microcontrolador, sendo desenvolvido na plataforma Arduino, versão 1.8.7. 
+Já o \textit{Firmware} é responsável pela inteligência agregada ao \textit{hardware}, capaz de gerenciar e controlar periféricos, como botões, chaves, diodos de emissão de luz (LEDs), circuitos integrados e etc. O \textit{firmware} é embarcado em um componente eletrônico, chamado microcontrolador, sendo aqui desenvolvido na plataforma Arduino, versão 1.8.7. 
 
 Por fim, o Aplicativo \textit{mobile} é incumbido de interagir com o usuário a partir de botões, caixas de texto, menus e etc, e também de inter-relacionar-se com o \textit{Firmware}, executando as requisições do usuário final. O aplicativo \textit{mobile} foi desenvolvido utilizando a plataforma App Inventor, versão 2, e o editor Notepad++, versão 7.6.
 
@@ -35,7 +35,7 @@ O Circuito do microcontrolador e de conexão com \textit{Wi-Fi} é responsável por
 
 O Circuito de alimentação e de ativação do Condicionador de Ar é incumbido de adequar a energia elétrica da rede para alimentar corretamente os periféricos do \textit{Hardware} e controlar a alimentação elétrica entregue à carga, ou seja, permitir ou não o fluxo de energia.
 
-E o Circuito de Medição de energia elétrica e sensoriamento é responsável por realizar as medições provenientes da rede elétrica - como tensão, corrente, potência ativa e frequência - com intuito de definir se os níveis estão adequados para o perfeito funcionamento do condicionador de ar e verificar a presença ou ausência humana onde o equipamento está instalado.
+O Circuito de Medição de energia elétrica e sensoriamento é responsável por realizar as medições provenientes da rede elétrica - como tensão, corrente, potência ativa e frequência - com intuito de definir se os níveis estão adequados para o perfeito funcionamento do condicionador de ar e verificar a presença ou ausência humana onde o equipamento está instalado.
 
  
 

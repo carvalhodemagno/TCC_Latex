@@ -5,21 +5,23 @@
 
 Este trabalho apresentou o desenvolvimento de um sistema de controle e monitoramento para condicionadores de ar, baseando-se em conceitos de internet das coisas. 
 
-Primeiramente foi desenvolvido um protótipo de \textit{hardware}, em uma PCB, capaz de acionar o condicionador de ar a partir de uma contatora, verificar o consumo de energia elétrica, utilizando o CI MCP39F521, e verificar a presença humana a partir do sensor EKMC1601111, além de permitir a comunicação pela internet com o microcontrolador ESP8266 com Wi-Fi embutido. 
+Com o desenvolvimento do \textit{hardware}, em uma PCB, foi possível acionar o condicionador de ar a partir de uma contatora, verificar o consumo de energia elétrica, utilizando o CI MCP39F521, e verificar a presença humana a partir do sensor EKMC1601111, além de permitir a comunicação pela internet com o microcontrolador ESP8266 com Wi-Fi embutido. 
 
-Em seguida, foi desenvolvido o \textit{firmware} responsável por integrar inteligência ao \textit{hardware}. Utilizando o microcontrolador no módulo ESP12-F, foi possível comunicar-se pelo protocolo MQTT, utilizando a internet, analisar os parâmetros da rede de energia elétrica, verificando sua qualidades, e verificar presença humana para evitar eventuais desperdícios de consumo.
+A partir do desenvolvido do \textit{firmware}, foi possível integrar inteligência ao \textit{hardware}, a partir de um \textit{software} de baixo nível elaborado em linguagem C++ na plataforma Arduino. Utilizando o microcontrolador no módulo ESP12-F, foi possível comunicar-se pelo protocolo MQTT, utilizando a internet, analisar os parâmetros da rede de energia elétrica, verificando sua qualidade, e verificar presença humana para evitar eventuais desperdícios de consumo.
 
-Por fim, foi desenvolvido um aplicativo \textit{mobile}, possibilitando a interação com o sistema de forma remota, a partir da comunicação sob o mesmo protocolo. No aplicativo, as funcionalidades disponíveis ao usuário foram: Ligar ou Desligar o condicionador de ar, verificar o consumo instantâneo, verificar presença humana instantânea e escolher horário para desligar ou ligar.
+Com o desenvolvido do aplicativo \textit{mobile}, foi possível interagir com o sistema de forma remota, a partir da comunicação sob o mesmo protocolo. No aplicativo, as funcionalidades disponíveis ao usuário foram: Ligar ou Desligar o condicionador de ar, verificar o consumo instantâneo, verificar presença humana instantânea e escolher horário para desligar ou ligar.
 
 Em relação à comparação entre a medição do consumo de energia elétrica realizada pelo protótipo e um medidor já difundido (alicate amperímetro ET-3367C), foi possível observar 4 grandezas em comparação nas figuras \ref{fig:grafios_medicao_tensão}, \ref{fig:graficos_medicao_corrente}, \ref{fig:graficos_medicao_frequencia} e \ref{fig:graficos_medicao_potencia}: tensão, corrente, frequência e potência ativa respectivamente. O erro relativo máximo foi de 1.16\% e foi encontrado na grandeza "corrente", conforme demonstrado na figura \ref{fig:erro_corrente.eps}.
 
 O somatório do custo dos principais componentes do sistema, conforme a tabela \ref{table:lista_material}, é estimado em torno de U\$20, quando adquiridos em grandes quantidades, portanto possibilita ser uma opção economicamente viável para implementação.
+
+Com a finalização deste trabalho, foi possível averiguar que o sistema é capaz de monitorar e controlar condicionadores de ar, utilizando conceitos de internet das coisas, a partir de um \textit{hardware} de baixo custo, uma vez atendidos os objetivos específicos, como demonstrado no capítulo \ref{chapter:chapter_testes_avaliacao}.
 
 
 \section{Trabalhos futuros}
 Sugere-se propostas para trabalhos futuros relacionados ao sistema de controle remoto para condicionadores de ar:
 \begin{itemize}
 	\item Implementar cálculo para disponibilizar valor monetário, em reais (R\$) por exemplo, do consumo do condicionador de ar em duas modalidades: instantâneo e acumulado (diário, semanal e mensal);
-	\item Adicionar inteligência ao sistema, ou seja, tomada de decisões autônomas conforme hábitos do usuário, como ligar o condicionador de ar sempre por voltas das 18h, por exemplo;
+	\item Adicionar funcionalidade para tomadas de decisões autônomas conforme hábitos do usuário, como ligar o condicionador de ar sempre por voltas das 18h, por exemplo;
 	\item Implementar, no aplicativo \textit{mobile}, controle para múltiplas instâncias do protótipo de \textit{hardware} em uma residência.
 \end{itemize}
